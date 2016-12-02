@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+	<name>Страницы тегов</name>
+	<version>1.0</version>
+	<description></description>
+	<data>14.01.2016</data>
+	<dependence>
+		<module name="apTags"/>
+	</dependence>
+</module>

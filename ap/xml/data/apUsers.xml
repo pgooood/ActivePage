@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section>
+	<!-- Форма редактирования -->
+	<form id="user_form_edit" title="Изменить данные пользователя" method="post" autocheck="autocheck" baseURI="file:///%PATH_USERS%?/users/user[%POSITION%]">
+		<param name="row" uri="/@login"/>
+		<field type="text" name="login" label="Логин" size="40" check="empty" uri="/@login"/>
+		<field type="password" name="pass" label="Пароль" size="20" uri="/@pass" saveMD5="saveMD5" saveIfNoEmpty="saveIfNoEmpty"/>
+		<field type="text" name="name" label="Имя" size="40" uri="/@name"/>
+		<field type="text" name="filter" label="Фильтер" size="60" uri="/@filter"><desc>Айди разделов разрешенных для редактирования, через запятую</desc></field>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Форма добавления -->
+	<form id="user_form_add" title="Добавить пользователя" method="post" autocheck="autocheck" baseURI="file:///%PATH_USERS%?/users">
+		<field type="text" name="user[login]" label="Логин" size="40" check="empty" uri="#user"/>
+		<field type="password" name="user[pass]" label="Пароль" size="20" uri="#user" check="empty" saveMD5="saveMD5"/>
+		<field type="text" name="user[name]" label="Имя" size="40" uri="#user"/>
+		<field type="text" name="user[filter]" label="Фильтер" size="60" uri="#user"><desc>Айди разделов разрешенных для редактирования, через запятую</desc></field>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Список записей -->
+	<rowlist id="user_list" pageSize="10" add="add" delete="delete">
+		<col name="sort" header="№"/>
+		<col name="login" header="Логин"/>
+		<col name="name" header="Имя"/>
+		<col name="active"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+			<button action="move" title="Переместить"/>
+		</buttons>
+	</rowlist>
+	
+	<!-- Модули -->
+	<modules>
+		<module id="m1" title="Пользователи" name="apUsers"/>
+	</modules>
+</section>

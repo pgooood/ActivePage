@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+	<name>Фотогалерея</name>
+	<version>1.0</version>
+	<description>Галерея изображений в XML</description>
+	<data>26.02.2013</data>
+	<dependence>
+		<module name="apContent"/>
+	</dependence>
+</module>

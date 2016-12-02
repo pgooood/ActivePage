@@ -1,0 +1,71 @@
+/* CSS Document */
+
+html,body{height:100%;}
+html{background:#bac6de url(../images/auth_body_gradient.png) repeat-x 0 100%;}
+body{background:url(../images/auth_body_logo.png) no-repeat 50% 50%;}
+
+#auth{
+position:absolute;
+left:50%;
+right:50%;
+top:47%;
+bottom:53%;
+background:#eef0f3;
+margin:-160px -200px;
+box-shadow:3px 3px 9px #848b9c;
+}
+#auth header{
+height:104px;
+background:url(../images/top_bg.png) repeat-x 0 -104px;
+}
+#auth header h1{
+position:absolute;
+top:30px;
+left:25px;
+margin:0;
+padding:0;
+}
+#auth header nav{
+position:absolute;
+right:0;
+top:0;
+height:68px;
+width:203px;
+padding:36px 0 0 15px;
+background:url(../images/top_bg.png) no-repeat 0 0;
+}
+#auth header nav a{
+color:#fff;
+font-size:12px;
+padding:0 20px 0 0;
+background:url(../images/top02.png) no-repeat 100% 70%;
+}
+#auth article{
+padding:15px 20px;
+}
+form#form_auth{
+text-align:center;
+}
+form#form_auth > div{
+padding:0 0 12px;
+}
+form#form_auth label{
+font-size:18px;
+font-weight:normal;
+color:#5f6065;
+display:block;
+padding:0 0 2px;
+}
+form#form_auth label{
+}
+form#form_auth input[type='text'],
+form#form_auth input[type='password']{
+width:250px;
+font-size:22px;
+text-align:center;
+height:30px;
+line-height:30px;
+}
+form#form_auth input[type='submit']{
+	margin-top:7px;
+}

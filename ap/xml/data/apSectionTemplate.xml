@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section>
+	<modules>
+		<module id="m1" title="Типы разделов" name="apSectionTemplate">
+			<rowlist id="section_list" pageSize="10" delete="delete">
+				<col name="sort" header="№"/>
+				<col name="title" header="Название"/>
+				<buttons>
+					<button action="delete" title="Удалить"/>
+				</buttons>
+			</rowlist>
+			<packages><package id="p1" title="Колонки буровые распорные"><section _ap="_ap">
+	<modules>
+		<module id="m1" name="apContent" title="Содержание">
+			<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']">
+				<fieldset baseURI="file:///%PATH_STRUCT%?%SECTION_XPATH%/product">
+					<field type="text" name="title" label="Название" size="40" uri="/@title"/>
+					<field type="text" name="prop-height" label="Высота стойки колонки, м" size="20" uri="/prop[@label='Высота стойки колонки, м']"/>
+					<field type="text" name="prop-power" label="Сила подачи, Н" size="20" uri="/prop[@label='Сила подачи, Н']"/>
+					<field type="text" name="prop-massa" label="Масса колонки (без перфоратора), кг" size="20" uri="/prop[@label='Масса колонки (без перфоратора), кг']"/>
+				</fieldset>
+				<field type="html" name="detail-props" label="Характеристики" uri="/html[@name='props']" height="350"/>
+				<field type="html" name="content" label="Содержание" uri="/html[@name='content']" height="350"/>
+				<field type="image" name="images" label="Фото" uri="file:///%PATH_STRUCT%?%SECTION_XPATH%/product/images" baseURI="file:///userfiles/catalog" max="30" hasTitle="hasTitle">
+					<param name="label" uri="/%IMG_NAME%.jpg?max=1280"/>
+					<param name="label" uri="/%IMG_NAME%_preview.jpg?w=300&amp;h=300" preview="preview"/>
+				</field>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+		<module id="m2" name="apMeta" title="Метатеги">
+			<form title="Редактирование метатэгов" id="meta_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+				<field type="text" name="title" label="Заголовок" size="60" uri="/title"/>
+				<field type="text" name="keywords" label="Ключевые слова" size="60" uri="/keywords"/>
+				<field type="text" name="description" label="Описание" size="60" uri="/description"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+	</modules>
+</section><section _cl="_cl">
+	<modules>
+		<module id="m1" name="catalog" title="Содержание"/>
+		<module id="m2" name="meta" title="Метатеги"/>
+	</modules>
+	<template id="default">
+		<template id="catalog"/>
+	</template>
+</section></package><package id="p2" title="Пневмоперфораторы"><section _ap="_ap">
+	<modules>
+		<module id="m1" name="apContent" title="Содержание">
+			<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']">
+				<fieldset baseURI="file:///%PATH_STRUCT%?%SECTION_XPATH%/product">
+					<field type="text" name="title" label="Название" size="40" uri="/@title"/>
+					<field type="text" name="prop-piston" label="Энергия удара поршня-ударника, Дж" size="20" uri="/prop[@label='Энергия удара поршня-ударника, Дж']"/>
+					<field type="text" name="prop-torque" label="Крутящий момент, Нм" size="20" uri="/prop[@label='Крутящий момент, Нм']"/>
+					<field type="text" name="prop-massa" label="Масса перфоратора, кг" size="20" uri="/prop[@label='Масса перфоратора, кг']"/>
+				</fieldset>
+				<field type="html" name="detail-props" label="Характеристики" uri="/html[@name='props']" height="350"/>
+				<field type="html" name="content" label="Содержание" uri="/html[@name='content']" height="350"/>
+				<field type="image" name="images" label="Фото" uri="file:///%PATH_STRUCT%?%SECTION_XPATH%/product/images" baseURI="file:///userfiles/catalog" max="30" hasTitle="hasTitle">
+					<param name="label" uri="/%IMG_NAME%.jpg?max=1280"/>
+					<param name="label" uri="/%IMG_NAME%_preview.jpg?w=300&amp;h=300" preview="preview"/>
+				</field>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+		<module id="m2" name="apMeta" title="Метатеги">
+			<form title="Редактирование метатэгов" id="meta_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+				<field type="text" name="title" label="Заголовок" size="60" uri="/title"/>
+				<field type="text" name="keywords" label="Ключевые слова" size="60" uri="/keywords"/>
+				<field type="text" name="description" label="Описание" size="60" uri="/description"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+	</modules>
+</section><section _cl="_cl">
+	<modules>
+		<module id="m1" name="catalog" title="Содержание"/>
+		<module id="m2" name="meta" title="Метатеги"/>
+	</modules>
+	<template id="default">
+		<template id="catalog"/>
+	</template>
+</section></package><package id="p3" title="Масленки"><section _ap="_ap">
+	<modules>
+		<module id="m1" name="apContent" title="Содержание">
+			<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']">
+				<fieldset baseURI="file:///%PATH_STRUCT%?%SECTION_XPATH%/product">
+					<field type="text" name="title" label="Название" size="40" uri="/@title"/>
+					<field type="text" name="prop-flow" label="Средний расход масла, л/ч" size="20" uri="/prop[@label='Средний расход масла, л⁄ч']"/>
+					<field type="text" name="prop-capacity" label="Вместимость, л" size="20" uri="/prop[@label='Вместимость, л']"/>
+					<field type="text" name="prop-massa" label="Масса масленки, кг" size="20" uri="/prop[@label='Масса масленки, кг']"/>
+				</fieldset>
+				<field type="html" name="detail-props" label="Характеристики" uri="/html[@name='props']" height="350"/>
+				<field type="html" name="content" label="Содержание" uri="/html[@name='content']" height="350"/>
+				<field type="image" name="images" label="Фото" uri="file:///%PATH_STRUCT%?%SECTION_XPATH%/product/images" baseURI="file:///userfiles/catalog" max="30" hasTitle="hasTitle">
+					<param name="label" uri="/%IMG_NAME%.jpg?max=1280"/>
+					<param name="label" uri="/%IMG_NAME%_preview.jpg?w=300&amp;h=300" preview="preview"/>
+				</field>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+		<module id="m2" name="apMeta" title="Метатеги">
+			<form title="Редактирование метатэгов" id="meta_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+				<field type="text" name="title" label="Заголовок" size="60" uri="/title"/>
+				<field type="text" name="keywords" label="Ключевые слова" size="60" uri="/keywords"/>
+				<field type="text" name="description" label="Описание" size="60" uri="/description"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+	</modules>
+</section><section _cl="_cl">
+	<modules>
+		<module id="m1" name="catalog" title="Содержание"/>
+		<module id="m2" name="meta" title="Метатеги"/>
+	</modules>
+	<template id="default">
+		<template id="catalog"/>
+	</template>
+</section></package><package id="p4" title="Пневмоподдержки"><section _ap="_ap">
+	<modules>
+		<module id="m1" name="apContent" title="Содержание">
+			<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']">
+				<fieldset baseURI="file:///%PATH_STRUCT%?%SECTION_XPATH%/product">
+					<field type="text" name="title" label="Название" size="40" uri="/@title"/>
+					<field type="text" name="catalog-prop-1" label="Усилие подачи, Н (кгс)" size="20" uri="/prop[@label='Усилие подачи, Н (кгс)']"/>
+					<field type="text" name="catalog-prop-2" label="Ход штока (суммарный), мм" size="20" uri="/prop[@label='Ход штока (суммарный), мм']"/>
+					<field type="text" name="catalog-prop-3" label="Масса, кг" size="20" uri="/prop[@label='Масса, кг']"/>
+				</fieldset>
+				<field type="html" name="detail-props" label="Характеристики" uri="/html[@name='props']" height="350"/>
+				<field type="html" name="content" label="Содержание" uri="/html[@name='content']" height="350"/>
+				<field type="image" name="images" label="Фото" uri="file:///%PATH_STRUCT%?%SECTION_XPATH%/product/images" baseURI="file:///userfiles/catalog" max="30" hasTitle="hasTitle">
+					<param name="label" uri="/%IMG_NAME%.jpg?max=1280"/>
+					<param name="label" uri="/%IMG_NAME%_preview.jpg?w=300&amp;h=300" preview="preview"/>
+				</field>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+		<module id="m2" name="apMeta" title="Метатеги">
+			<form title="Редактирование метатэгов" id="meta_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+				<field type="text" name="title" label="Заголовок" size="60" uri="/title"/>
+				<field type="text" name="keywords" label="Ключевые слова" size="60" uri="/keywords"/>
+				<field type="text" name="description" label="Описание" size="60" uri="/description"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+	</modules>
+</section><section _cl="_cl">
+	<modules>
+		<module id="m1" name="catalog" title="Содержание"><html name="props"/><html name="content"/></module>
+		<module id="m2" name="meta" title="Метатеги"/>
+	</modules>
+	<template id="default">
+		<template id="catalog"/>
+	</template>
+</section></package><package id="p5" title="Продукт без категории"><section _ap="_ap">
+	<modules>
+		<module id="m1" name="apContent" title="Содержание">
+			<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']">
+				<field type="html" name="detail-props" label="Характеристики" uri="/html[@name='props']" height="350"/>
+				<field type="html" name="content" label="Содержание" uri="/html[@name='content']" height="350"/>
+				<field type="image" name="images" label="Фото" uri="file:///%PATH_STRUCT%?%SECTION_XPATH%/product/images" baseURI="file:///userfiles/catalog" max="30" hasTitle="hasTitle">
+					<param name="label" uri="/%IMG_NAME%.jpg?max=1280"/>
+					<param name="label" uri="/%IMG_NAME%_preview.jpg?w=300&amp;h=300" preview="preview"/>
+				</field>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+		<module id="m2" name="apMeta" title="Метатеги">
+			<form title="Редактирование метатэгов" id="meta_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+				<field type="text" name="title" label="Заголовок" size="60" uri="/title"/>
+				<field type="text" name="keywords" label="Ключевые слова" size="60" uri="/keywords"/>
+				<field type="text" name="description" label="Описание" size="60" uri="/description"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+	</modules>
+</section><section _cl="_cl">
+	<modules>
+		<module id="m1" name="catalog" title="Содержание"/>
+		<module id="m2" name="meta" title="Метатеги"/>
+	</modules>
+	<template id="default">
+		<template id="catalog"/>
+	</template>
+</section></package><package id="p6" title="Пневмоударники"><section _ap="_ap">
+	<modules>
+		<module id="m1" name="apContent" title="Содержание">
+			<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']">
+				<fieldset baseURI="file:///%PATH_STRUCT%?%SECTION_XPATH%/product">
+					<field type="text" name="title" label="Название" size="40" uri="/@title"/>
+					<field type="text" name="catalog-prop-1" label="Номинальный диаметр скважины, мм" size="20" uri="/prop[@label='Номинальный диаметр скважины, мм']"/>
+					<field type="text" name="catalog-prop-2" label="Ударная мощность, кВт" size="20" uri="/prop[@label='Ударная мощность, кВт']"/>
+					<field type="text" name="catalog-prop-3" label="Масса ударника, кг" size="20" uri="/prop[@label='Масса ударника, кг']"/>
+				</fieldset>
+				<field type="html" name="detail-props" label="Характеристики" uri="/html[@name='props']" height="350"/>
+				<field type="html" name="content" label="Содержание" uri="/html[@name='content']" height="350"/>
+				<field type="image" name="images" label="Фото" uri="file:///%PATH_STRUCT%?%SECTION_XPATH%/product/images" baseURI="file:///userfiles/catalog" max="30" hasTitle="hasTitle">
+					<param name="label" uri="/%IMG_NAME%.jpg?max=1280"/>
+					<param name="label" uri="/%IMG_NAME%_preview.jpg?w=300&amp;h=300" preview="preview"/>
+				</field>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+		<module id="m2" name="apMeta" title="Метатеги">
+			<form title="Редактирование метатэгов" id="meta_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+				<field type="text" name="title" label="Заголовок" size="60" uri="/title"/>
+				<field type="text" name="keywords" label="Ключевые слова" size="60" uri="/keywords"/>
+				<field type="text" name="description" label="Описание" size="60" uri="/description"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+	</modules>
+</section><section _cl="_cl">
+	<modules>
+		<module id="m1" name="catalog" title="Содержание"><html name="props"/><html name="content"/></module>
+		<module id="m2" name="meta" title="Метатеги"/>
+	</modules>
+	<template id="default">
+		<template id="catalog"/>
+	</template>
+</section></package><package id="p7" title="Двигатели"><section _ap="_ap">
+	<modules>
+		<module id="m1" name="apContent" title="Содержание">
+			<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']">
+				<fieldset baseURI="file:///%PATH_STRUCT%?%SECTION_XPATH%/product">
+					<field type="text" name="title" label="Название" size="40" uri="/@title"/>
+					<field type="text" name="catalog-prop-1" label="Объем, см3" size="20" uri="/prop[@label='Объем, см3']"/>
+					<field type="text" name="catalog-prop-2" label="Мощность двигателя, л.с. (кВт)" size="20" uri="/prop[@label='Мощность двигателя, л.с. (кВт)']"/>
+					<field type="select" name="catalog-prop-3" label="Тип выходного вала" uri="/prop[@label='Тип выходного вала' and @type='shaft']">
+						<option value="">...</option>
+						<option value="1">Конический, Цилиндрический</option>
+					</field>
+					<field type="text" name="catalog-prop-4" label="Размеры ДхШхВ, мм" size="20" uri="/prop[@label='Размеры ДхШхВ, мм']"/>
+					<field type="text" name="catalog-prop-5" label="Вес нетто, кг" size="20" uri="/prop[@label='Вес нетто, кг']"/>
+					<field type="text" name="catalog-prop-6" label="Эл. стартер" size="20" uri="/prop[@label='Эл. стартер']"/>
+				</fieldset>
+				<field type="html" name="detail-props" label="Характеристики" uri="/html[@name='props']" height="350"/>
+				<field type="html" name="content" label="Содержание" uri="/html[@name='content']" height="350"/>
+				<field type="image" name="images" label="Фото" uri="file:///%PATH_STRUCT%?%SECTION_XPATH%/product/images" baseURI="file:///userfiles/catalog" max="30" hasTitle="hasTitle">
+					<param name="label" uri="/%IMG_NAME%.jpg?max=1280"/>
+					<param name="label" uri="/%IMG_NAME%_preview.jpg?w=300&amp;h=300" preview="preview"/>
+				</field>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+		<module id="m2" name="apMeta" title="Метатеги">
+			<form title="Редактирование метатэгов" id="meta_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+				<field type="text" name="title" label="Заголовок" size="60" uri="/title"/>
+				<field type="text" name="keywords" label="Ключевые слова" size="60" uri="/keywords"/>
+				<field type="text" name="description" label="Описание" size="60" uri="/description"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+	</modules>
+</section><section _cl="_cl">
+	<modules>
+		<module id="m1" name="catalog" title="Содержание"/>
+		<module id="m2" name="meta" title="Метатеги"/>
+	</modules>
+	<template id="default">
+		<template id="catalog"/>
+	</template>
+</section></package></packages>
+		</module>
+	</modules>
+</section>

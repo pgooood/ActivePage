@@ -1,0 +1,40 @@
+/* CSS Document */
+
+body,table,input,textarea,select{
+font-family:Arial, Helvetica, sans-serif;
+}
+fieldset{
+border:1px solid #d2d4d8;
+}
+nav.pagination{
+border:1px solid #cad3e0;
+}
+input[type='button'],
+input[type='submit'],
+input[type='reset']{
+padding-right:0 !important;
+padding-left:0 !important;
+}
+input[type='button'].cancel,
+input[type='submit'].cancel,
+input[type='reset'].cancel{
+padding-left:20px !important;
+}
+input[type='button'].copy,
+input[type='submit'].copy{
+padding-left:20px !important;
+}
+input[type='button'].ok,
+input[type='submit'].ok,
+input[type='button'].add,
+input[type='submit'].add,
+input[type='button'].del,
+input[type='submit'].del{
+padding-left:20px !important;
+}
+input[type='button'].ok[disabled],
+input[type='submit'].ok[disabled],
+input[type='button'].add[disabled],
+input[type='submit'].add[disabled]{
+filter:alpha(opacity=50);
+}

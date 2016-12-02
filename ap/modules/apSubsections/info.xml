@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+	<name>Подразделы</name>
+	<version>1.1</version>
+	<description>Управление дочерними подразделами</description>
+	<data>11.12.2012</data>
+	<dependence>
+		<module name="apSectionAdd"/>
+		<module name="apSectionEdit"/>
+		<module name="apSectionTemplate"/>
+	</dependence>
+</module>

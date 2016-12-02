@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<!-- Форма редактирования -->
+	<form id="form_edit" title="Изменить данные раздела" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%?section=%SECTION%&amp;module=%CONFIG_MODULE%&amp;id_article=%ROW%">
+		<param name="row" uri="#id_article"/>
+		<field type="text" name="h1" label="H1" size="60" uri="#h1"/>
+		<fieldset>
+			<field type="text" name="title" label="Title" size="60" uri="#title"/>
+			<field type="textarea" name="keywords" label="Keywords" uri="#keywords"/>
+			<field type="textarea" name="description" label="Description" uri="#description"/>
+		</fieldset>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+		</buttonset>
+	</form>
+	
+	<!-- Форма настроек -->
+	<form id="form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MODULE%']">
+		<param name="row" uri="/@id"/>
+		<field type="select" name="module" label="Модуль статей" uri="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MODULE%']/config/@module" check="empty"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+</data>

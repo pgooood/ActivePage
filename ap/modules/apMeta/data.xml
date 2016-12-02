@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data><form title="Редактирование метатэгов" id="meta_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+	<field type="text" name="title" label="Заголовок" size="60" uri="/title"/>
+	<field type="text" name="keywords" label="Ключевые слова" size="60" uri="/keywords"/>
+	<field type="text" name="description" label="Описание" size="60" uri="/description"/>
+	<buttonset><button type="submit" value="Сохранить" class="ok" action="save"/></buttonset>
+</form></data>

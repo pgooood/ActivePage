@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+<!-- Форма редактирования -->
+<form id="article_form_edit" title="Изменить данные" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%?id=%ID%">
+	<param name="row" uri="#id"/>
+	<field type="text" name="title" label="Заголовок" size="60" uri="#title"/>
+	<field type="file" name="path" label="Файл" uri="#article"/>
+	<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+	<buttonset>
+		<button type="submit" value="Сохранить" class="ok" action="update"/>
+		<button type="submit" value="Применить" class="ok" action="apply_update"/>
+		<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+	</buttonset>
+</form>
+
+<!-- Форма добавления -->
+<form id="article_form_add" title="Добавить файл" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%">
+	<param name="section" uri="#section"/>
+	<param name="module" uri="#module"/>
+	<param name="sort" uri="#sort"/>
+	<field type="text" name="title" label="Заголовок" size="60" uri="#title"/>
+	<field type="file" name="path" label="Файл" uri="#article"/>
+	<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+	<buttonset>
+		<button type="submit" value="Сохранить" class="ok" action="add"/>
+		<button type="submit" value="Применить" class="ok" action="apply_add"/>
+		<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+	</buttonset>
+</form>
+
+<!-- Список записей -->
+<rowlist id="article_list" pageSize="10" sort="asc">
+	<actions>
+		<action name="new" title="Добавить" class="add"/>
+		<action name="delete" title="Удалить выбранное"/>
+	</actions>
+	<col name="sort" header="№"/>
+	<place for="date"/>
+	<col name="file_link" header="Заголовок"/>
+	<col name="active"/>
+	<buttons>
+		<button action="edit" title="Редактировать"/>
+		<button action="delete" title="Удалить"/>
+		<button action="move" title="Переместить"/>
+	</buttons>
+</rowlist>
+</data>

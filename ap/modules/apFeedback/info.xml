@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+	<name>Обратная связь</name>
+	<version>1.2</version>
+	<description>Отправка полей формы на почту</description>
+	<data>20.06.2012</data>
+</module>
+<!--
+1.2
+date 20.06.2012
+notice: 
+	code refactor;
+	OOP structure;
+	install client files.
+	
+1.1
+date: 04.06.2012
+notice: add functionally for administration panel, and interface to add module
+
+1.0
+date: 10.04.2012
+notice: release
+-->

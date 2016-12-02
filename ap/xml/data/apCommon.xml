@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section>
+	<form id="common_form" method="post" autocheck="autocheck" baseURI="file:///%PATH_SITE%">
+		<field type="text" name="name" label="Имя сайта" size="60" check="empty" uri="?/site/@name"/>
+		<field type="text" name="domain" label="Доменное имя" size="30" check="empty" uri="?/site/@domain"/>
+		<field type="text" name="email" label="Электронная почта" size="30" check="email" uri="?/site/@email"/>
+		<field type="text" name="phone" label="Телефон" size="40" uri="?/site/@phone"/>
+		<field type="text" name="phone2" label="Телефон дополнительный" size="40" uri="?/site/@phone2"/>
+		<field type="text" name="address" label="Адрес" size="60" uri="?/site/@address"/>
+		<fieldset title="Метатэги по умолчанию">
+			<field type="textarea" name="metadescription" label="Описание" rows="2" uri="?/site/meta[@name='description']"/>
+			<field type="textarea" name="metakeywords" label="Ключевые слова" rows="2" uri="?/site/meta[@name='keywords']"/>
+		</fieldset>
+		<fieldset title="MySQL" baseURI="file:///%PATH_SITE%?/site/mysql/con[@id='default']/">
+			<field type="text" name="mysql_host" label="Сервер" size="30" uri="@host"/>
+			<field type="text" name="mysql_user" label="Имя пользователя" uri="@user"/>
+			<field type="password" name="mysql_password" label="Пароль" uri="@pass" saveIfNoEmpty="saveIfNoEmpty"/>
+			<field type="text" name="mysql_db" label="Имя базы данных" uri="@db"/>
+			<field type="text" name="mysql_table_prefix" label="Префикс таблиц" uri="@pref"/>
+		</fieldset>
+		<buttonset>
+			<button action="save" type="submit" value="Сохранить" class="ok"/>
+		</buttonset>
+	</form>
+	<modules>
+		<module id="m1" title="Настройки проекта" name="apCommon"/>
+	</modules>
+</section>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form id="template_edit" title="Изменить шаблон" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/template/template[@id='%TEMLATEID%']">
+	<field type="select" name="id_template" label="Шаблон" uri="/@id" check="empty"/>
+	<buttonset>
+		<button type="submit" value="Сохранить" class="ok" action="update"/>
+		<button type="submit" value="Применить" class="ok" action="apply_update"/>
+		<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+	</buttonset>
+</form>

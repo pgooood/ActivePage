@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+	<name>Метатеги для статей</name>
+	<version>1.0</version>
+	<description>Управляет метатегами, как раздела, так и отдельных статей</description>
+	<data>13.05.2015</data>
+</module>

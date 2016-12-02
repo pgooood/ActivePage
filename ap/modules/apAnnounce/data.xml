@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<form id="settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MODULE%']">
+		<param name="row" uri="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MODULE%']/@id"/>
+		<field type="text" name="tab_title" label="Заголовок закладки" size="40" uri="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MODULE%']/@title"/>
+		<field type="select" name="section" label="Раздел содержащий модуль управляющий данными" uri="/announce/@section" check="empty"/>
+		<field type="select" name="module" label="Модуль" uri="/announce/@module" sectionFieldName="section" check="empty"/>
+		<field type="text" name="size" label="Количество записей" size="3" uri="/announce/@size" check="empty"/>
+		<field type="text" name="tagname" label="Имя тэга" size="20" uri="/announce/@name" check="empty"/>
+		<field type="select" name="parent" label="Размещение" uri="/announce/@parent" check="empty">
+			<option value="/page">/page</option>
+			<option value="/page/section">/page/section</option>
+		</field>
+		<field type="select" name="sort" label="Сортировка" uri="/announce/@sort" check="empty">
+			<option value="`sort` desc">По убыванию</option>
+			<option value="`sort` asc">По возрастанию</option>
+		</field>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+</data>

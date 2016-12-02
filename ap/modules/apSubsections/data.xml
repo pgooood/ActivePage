@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<!-- Форма редактирования -->
+	<form id="form_edit" title="Изменить данные" method="post" autocheck="autocheck" baseURI="file:///%PATH_STRUCT_CLIENT%?/structure/%PATH%sec[@id='%SUBSECTION%']">
+		<param name="row" uri="/@id"/>
+		<field type="text" name="title" label="Заголовок" size="60" uri="/@title" check="empty"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Форма добавления -->
+	<form id="form_add" title="Добавить подраздел" method="post" autocheck="autocheck">
+		<field type="text" name="title" label="Заголовок" size="60" check="empty"/>
+		<field type="text" name="alias" label="Ссылка" size="40" check="sectionId" sectionTitleField="title"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Список записей -->
+	<rowlist id="list" pageSize="10" add="add" delete="delete">
+		<col name="sort" header="№"/>
+		<col name="title" header="Заголовок"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+			<button action="move" title="Переместить"/>
+		</buttons>
+	</rowlist>
+	
+	<!-- Настройки -->
+	<form id="settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MD%']">
+		<param name="row" uri="/@id"/>
+		<field type="text" name="tab_title" label="Заголовок закладки" size="40" uri="/@title"/>
+		<field type="select" name="section_template" label="Шаблон для новых подразделов" uri="/template/@id">
+			<option value="">...</option>
+		</field>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+</data>

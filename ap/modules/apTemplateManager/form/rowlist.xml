@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rowlist id="template_list" title="Список подшаблонов" pageSize="10" add="add" delete="delete">
+	<col name="id_template" header="Шаблон" class="cntr"/>
+	<buttons>
+		<button action="edit" title="Редактировать"/>
+		<button action="delete" title="Удалить"/>
+	</buttons>
+</rowlist>

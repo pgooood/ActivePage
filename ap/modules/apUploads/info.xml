@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+	<name>Загрузки</name>
+	<version>2.0</version>
+	<description>Список файлов для скачивания</description>
+	<dependence>
+		<module name="apArticles"/>
+	</dependence>
+	<data>14.01.2013</data>
+</module>

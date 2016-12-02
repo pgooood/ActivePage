@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><structure default="apData">
+	<sec id="apSetup" title="Настройки" readonly="readonly">
+		<sec id="apCommon" title="Общие"/>
+		<sec id="apUsers" title="Пользователи"/>
+		<sec id="apSectionTemplate" title="Типы разделов"/>
+	</sec>
+	<sec id="apStruct" title="Структура"/>
+	<sec id="apData" title="Данные"/>
+</structure>

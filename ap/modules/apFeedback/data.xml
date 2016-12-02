@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<rowlist id="feedback_list_fields" title="Перечень полей" pageSize="10" sort="asc" add="add" delete="delete">
+		<col name="sort" header="№"/>
+		<col name="type" header="Тип поля"/>
+		<col name="label" header="Заголовок поля"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+			<button action="move" title="Переместить"/>
+		</buttons>
+	</rowlist>
+	<form title="Форма обратной связи" id="feedback_form" method="post" autocheck="autocheck" baseURI="mysql://%CONNECT%/%TABLE%#">
+		<param name="action" value="feedback"/>
+		<param name="section" uri="section"/>
+		<param name="module" uri="module"/>
+		<param name="sort" uri="sort"/>
+		<field type="text" name="name" label="Контактное лицо" check="empty" mail="name" size="40"/>
+		<field type="text" name="phone" label="Контактный телефон" check="empty" mail="phone" size="40"/>
+		<field type="email" name="email" label="Электронная почта" check="email empty" mail="email" size="40"/>
+		<field type="textarea" name="message" label="Текст сообщения" rows="6" size="40" mail="message"/>
+		<field type="captcha" name="captcha" label="Введите результат выражения с картинки (цифрами)" show="1" check="empty"/>
+		<buttongroup>
+			<button type="submit" value="Отправить"/>
+			<button type="reset" value="Очистить"/>
+		</buttongroup>
+	</form>
+	<form id="feedback_addForm" title="Добавление поля" method="post" autocheck="autocheck">
+		<field type="text" name="label" label="Заголовок" size="40" check="empty"/>
+		<field type="select" name="type" label="Тип" event="onchange" size="40">
+			<option value="text">Текстовое</option>
+			<option value="email">Электронный адрес</option>
+			<option value="password">Пароль</option>
+			<option value="textarea">Расширенное текстовое поле</option>
+		</field>
+		<field type="checkbox" name="check" label="Обязательное" size="40" uri="/@check"/>
+		<field type="checkbox" name="mail" label="Добавить поле в e-mail уведомление" size="40" uri="/@mail"/>
+		<field type="text" name="size" label="Длинна отображаемого поля" size="5" uri="/@size"/>
+		<field type="text" name="rows" label="Высота текстовой области" size="5" uri="/@rows"/>
+		<field type="text" name="uri" label="Имя поля в таблице базы данных для сохранения" size="40" uri="/@uri"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	<form id="feedback_editForm" title="Редактирование поля" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']/form[@id='feedback_form']/field[@name='%FID%']">
+		<field type="text" name="label" label="Заголовок" size="40" uri="/@label"/>
+		<field type="select" name="type" label="Тип" size="40" event="onchange" uri="/@type">
+			<option value="text">Текстовое</option>
+			<option value="email">Электронный адрес</option>
+			<option value="password">Пароль</option>
+			<option value="textarea">Расширенное текстовое поле</option>
+		</field>
+		<field type="checkbox" name="check" label="Обязательное" size="40" uri="/@check"/>
+		<field type="checkbox" name="mail" label="Добавить поле в e-mail уведомление" size="40" uri="/@mail"/>
+		<field type="text" name="size" label="Длинна отображаемого поля" size="5" uri="/@size"/>
+		<field type="text" name="rows" label="Высота текстовой области" size="5" uri="/@rows"/>
+		<field type="text" name="uri" label="Имя поля в таблице базы данных для сохранения" size="40" uri="/@uri"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	<form id="feedback_form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+		<param name="row" uri="/@id"/>
+		<fieldset title="Общие настройки">
+			<field type="text" name="tab_title" label="Заголовок закладки" size="40" uri="file:///ap/xml/data/%ID%.xml?/section/modules/module[@id='%MD%']/@title"/>
+			<field type="text" name="form_title" label="Заголовок формы" size="40" uri="/form/@title"/>
+			<field type="checkbox" name="form_capcha" label="Использовать проверку капчи" uri="/form/field[@type='captcha']/@show"/>
+			<field type="text" name="form_class" label="Класс для тэга формы" size="20" uri="/form/@class"/>
+			<field type="text" name="form_id" label="Айди для тэга формы" size="20" uri="/form/@id"/>
+			<field type="html" name="form_mess_ok" label="Сообщение формы при успешной обработке" uri="/form/good" height="300" />
+			<field type="html" name="form_mess_fail" label="Сообщение формы при неудачной обработке" uri="/form/fail" height="300" />
+		</fieldset>
+		<fieldset title="Настройки почтовых уведомлений">
+			<field type="text" name="form_email_title" label="Тема письма" size="40" uri="/form/@theme"/>
+			<field type="text" name="form_email" label="E-mail администратора/менеджера (можно указать несколько через запятую)" size="40" uri="/form/@email"/>
+			<field type="select" name="form_email_tpl" label="Почтовый шаблон для электронного письма" uri="/form/@emailTpl">
+				<option value="">...</option>
+			</field>
+			<field type="checkbox" rel="userMail" name="form_send_user" label="Отправлять почтовое уведомление пользователю" uri="/form/@sendUser"/>
+			<field type="text" rel="userMail" name="form_email_title_user" label="Тема письма для пользователя" size="40" uri="/form/@themeUser"/>
+			<field type="select" rel="userMail" name="form_email_tpl_user" label="Почтовый шаблон для электронного письма пользователю" uri="/form/@emailTplUser">
+				<option value="">...</option>
+			</field>
+		</fieldset>
+		<fieldset title="Настройки полей базы данных">
+			<field type="checkbox" rel="saveDB" name="form_save_db" label="Сохранение полей в базу данных" uri="/form/@dbSave"/>
+			<field type="select" rel="saveDB" name="form__db_name_connect" label="Имя соединения с базой данных" size="40" uri="/form/@dbConnect">
+				<option value="">...</option>
+			</field>
+			<field type="select" rel="saveDB" name="form_db_name_table" label="Имя таблицы" uri="/form/@dbTable">
+				<option value="">...</option>
+			</field>
+		</fieldset>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+</data>

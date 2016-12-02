@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+		<field type="image" name="gallery" label="Изображения" uri="/photos" baseURI="file:///userfiles/photo" max="50" hasTitle="hasTitle">
+			<param name="label" uri="/%IMG_NAME%.jpg?max=1280"/>
+			<param name="label" uri="/%IMG_NAME%_preview.jpg?h=150" preview="preview"/>
+		</field>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="save"/>
+		</buttonset>
+	</form>
+	<form id="content_form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///ap/xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+		<param name="row" uri="/@id"/>
+		<field type="text" name="tab_title" label="Заголовок закладки" size="40" uri="/@title"/>
+		<field type="text" name="form_title" label="Заголовок формы" size="40" uri="/form/@title"/>
+		<fieldset title="Настройка изображений">
+			<field type="text" name="imgNum" label="Максимальное количество картинок" size="3" uri="/form[@id='content_form']/field[@name='gallery']/@max"/>
+			<field type="text" name="previewSizeH" label="Ширина превью в пикселях" size="4" maxlength="4"/>
+			<field type="text" name="previewSizeV" label="Высота превью в пикселях" size="4" maxlength="4"/>
+			<field type="text" name="previewSizeMax" label="Максимальный размер большей стороны превью" size="4" maxlength="4"/>
+			<field type="text" name="imgSizeMax" label="Максимальный размер большей стороны изображения" size="4" maxlength="4"/>
+		</fieldset>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+</data>

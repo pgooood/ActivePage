@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section>
+	<modules>
+		<module id="m1" name="apDispatch" title="Рассылка">
+			<form title="Рассылка сообщения" id="content_form" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MD%']">
+				<field type="text" name="subject" label="Тема" uri="/email/subject" size="60"/>
+				<field type="html" name="content" label="Содержание" uri="/email/content" height="350"><desc>Переменные для замены&lt;br&gt;
+					&lt;b&gt;#SURNAME#&lt;/b&gt; - Фамилия&lt;br&gt;
+					&lt;b&gt;#NAME#&lt;/b&gt; - Имя&lt;br&gt;
+					&lt;b&gt;#PATRONIMIC#&lt;/b&gt; - Отчество&lt;br&gt;
+					&lt;b&gt;#COMPANY#&lt;/b&gt; - Компания&lt;br&gt;
+					&lt;b&gt;#LOGIN#&lt;/b&gt; - Имя пользователя&lt;br&gt;
+					&lt;b&gt;#EMAIL#&lt;/b&gt; - Электронная почта&lt;br&gt;
+					&lt;b&gt;#PHONE#&lt;/b&gt; - Телефон&lt;br&gt;
+					&lt;b&gt;#CITY#&lt;/b&gt; - Город&lt;br&gt;
+					&lt;b&gt;#INN#&lt;/b&gt; - ИНН</desc></field>
+				<field type="file" name="file" label="Файл" uri="/email/file"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+					<button type="submit" value="Разослать" action="dispatch"/>
+				</buttonset>
+				<onsubmit>
+if(this.action.value == 'dispatch' &amp;&amp; !confirm('Подтвердите рассылку сообщений всем зарегистрированным пользователям.\n\nНе забудьте сохранить изменения перед рассылкой!'))return  false;</onsubmit>
+			</form>
+			<email>
+				<subject>Тестовое письмо</subject>
+				<content>&lt;p&gt;Здравствуйте, уважаемый(ая) #SURNAME# #NAME# #PATRONIMIC#!&lt;/p&gt;&#13;
+&lt;p&gt;Это тестовое письмо!&lt;/p&gt;&#13;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;&#13;
+&lt;hr /&gt;&#13;
+&lt;p&gt;Пиьмо сформировано автоматически и не требует ответа&lt;/p&gt;</content>
+				<file></file>
+			</email>
+		</module>
+	</modules>
+</section>

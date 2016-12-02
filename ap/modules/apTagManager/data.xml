@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<!-- Форма редактирования -->
+	<form id="tag_form_edit" title="Изменить тег" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%?id=%ID%">
+		<param name="row" uri="#id"/>
+		<field type="text" name="title" label="Заголовок" size="60" uri="#title"/>
+		<field type="text" name="alias" label="Алиас" size="60" uri="#alias"/>
+		<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Форма добавления -->
+	<form id="tag_form_add" title="Добавить тег" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%">
+		<param name="sort" uri="#sort"/>
+		<field type="text" name="title" label="Заголовок" size="60" uri="#title"/>
+		<field type="text" name="alias" label="Алиас" size="60" uri="#alias"/>
+		<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Список записей -->
+	<rowlist id="tag_list" pageSize="10" sort="asc">
+		<actions>
+			<action name="new" title="Добавить" class="add"/>
+			<action name="delete" title="Удалить выбранное"/>
+		</actions>
+		<col name="sort" header="№"/>
+		<col name="title" header="Заголовок"/>
+		<col name="alias" header="Алиас"/>
+		<col name="active"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+			<button action="move" title="Переместить"/>
+		</buttons>
+	</rowlist>
+	
+	<!-- Форма настроек -->
+	<form id="tag_form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MODULE%']">
+		<param name="row" uri="/@id"/>
+		<fieldset title="Настройки AP">
+			<field type="text" name="titleAdd" label="Заголовок формы добавления" size="30" uri="/form[@id='tag_form_add']/@title"/>
+			<field type="text" name="titleEdit" label="Заголовок формы редактирования" size="30" uri="/form[@id='tag_form_edit']/@title"/>
+			<field type="text" name="titleList" label="Заголовок списка" size="30" uri="/rowlist/@title"/>
+			<field type="text" name="listPageSize" label="Количество записей на странице списка" size="30" uri="/rowlist/@pageSize"/>
+		</fieldset>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+</data>

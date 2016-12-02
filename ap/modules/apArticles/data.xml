@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<!-- Форма редактирования -->
+	<form id="article_form_edit" title="Изменить статью" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%?id=%ID%">
+		<param name="row" uri="#id"/>
+		<field type="date" name="date" label="Дата (дд.мм.гггг)" check="empty" uri="#date"/>
+		<field type="text" name="title" label="Заголовок" size="60" uri="#title"/>
+		<field type="textarea" name="announce" label="Анонс" uri="#announce"/>
+		<field type="html" height="300" name="article" label="Статья" uri="#article"/>
+		<field type="image" name="image" label="Картинка" baseURI="file:///%PATH_IMAGE%" max="10">
+			<param name="image" uri="/%IMG_ID%.jpg?max=1024"/>
+			<param name="image" uri="/%IMG_ID%_preview.jpg?w=200" preview="preview"/>
+		</field>
+		<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Форма добавления -->
+	<form id="article_form_add" title="Добавить статью" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%">
+		<param name="section" uri="#section"/>
+		<param name="module" uri="#module"/>
+		<param name="sort" uri="#sort"/>
+		<field type="date" name="date" label="Дата (дд.мм.гггг)" check="empty" uri="#date"/>
+		<field type="text" name="title" label="Заголовок" size="60" uri="#title"/>
+		<field type="textarea" name="announce" label="Анонс" uri="#announce"/>
+		<field type="html" height="300" name="article" label="Статья" uri="#article"/>
+		<field type="image" name="image" label="Картинка" baseURI="file:///%PATH_IMAGE%" max="10">
+			<param name="image" uri="/%IMG_ID%.jpg?max=1024"/>
+			<param name="image" uri="/%IMG_ID%_preview.jpg?w=200" preview="preview"/>
+		</field>
+		<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Список записей -->
+	<rowlist id="article_list" pageSize="10" sort="asc">
+		<actions>
+			<action name="new" title="Добавить" class="add"/>
+			<action name="delete" title="Удалить выбранное"/>
+		</actions>
+		<col name="sort" header="№"/>
+		<col name="date" header="Дата"/>
+		<col name="title" header="Заголовок"/>
+		<col name="active"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+			<button action="move" title="Переместить"/>
+		</buttons>
+	</rowlist>
+	
+	<!-- Форма настроек -->
+	<form id="article_form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MODULE%']">
+		<param name="row" uri="/@id"/>
+		<fieldset title="Настройки AP">
+			<field type="text" name="titleAdd" label="Заголовок формы добавления" size="30" uri="/form[@id='article_form_add']/@title"/>
+			<field type="text" name="titleEdit" label="Заголовок формы редактирования" size="30" uri="/form[@id='article_form_edit']/@title"/>
+			<field type="text" name="titleList" label="Заголовок списка" size="30" uri="/rowlist/@title"/>
+			<field type="text" name="listPageSize" label="Количество записей на странице списка" size="30" uri="/rowlist/@pageSize"/>
+			<param name="imgNum" uri="/form[@id='article_form_add']/field[@name='image']/@max"/>
+			<field type="text" name="imgNum" label="Максимальное количество картинок" size="3" uri="/form[@id='article_form_edit']/field[@name='image']/@max"/>
+			<field type="select" name="adminSortorder" label="Порядок сортировки" uri="/rowlist/@sort">
+				<option value="asc">По возрастанию</option>
+				<option value="desc">По убыванию</option>
+			</field>
+		</fieldset>
+		<fieldset title="Настройки Клиента" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MODULE%']">
+			<field type="text" name="pageSize" label="Количество записей на странице" size="3" uri="/list/@pageSize"/>
+			<field type="text" name="pageParam" label="Имя параметра пагинации" size="20" uri="/list/@pageParam"/>
+			<field type="checkbox" name="includeContent" label="Выводить содержание в списке" uri="/list/@includeContent"/>
+			<field type="text" name="tplNameList" label="Имя тэга списка" size="10" uri="/list/@tagNameList"/>
+			<field type="text" name="tplNameText" label="Имя тэга статьи" size="10" uri="/list/@tagNameText"/>
+			<field type="select" name="clientSortorder" label="Порядок сортировки" uri="/list/@sort">
+				<option value="asc">По возрастанию</option>
+				<option value="desc">По убыванию</option>
+			</field>
+		</fieldset>
+		<fieldset title="Поля данных">
+			<field type="checkboxset" name="dataFields" inline="inline">
+				<option value="date">Дата</option>
+				<option value="announce">Анонс</option>
+				<option value="article">Содержание</option>
+				<option value="image">Картинки</option>
+			</field>
+			<field type="checkbox" name="hasTitle" value="hasTitle" label="Подпись к картинке" uri="/form[@id='article_form_edit']/field[@name='image']/@hasTitle"/>
+			<param name="announceType" uri="/form[@id='article_form_add']/field[@name='announce']/@type"/>
+			<field type="select" name="announceType" label="Тип поля для анонса" uri="/form[@id='article_form_edit']/field[@name='announce']/@type">
+				<option value="textarea">Textarea</option>
+				<option value="html">TinyMCE</option>
+				<option value="text">Text</option>
+			</field>
+			<field type="text" name="previewSizeH" label="Ширина превью в пикселях" size="4" maxlength="4"/>
+			<field type="text" name="previewSizeV" label="Высота превью в пикселях" size="4" maxlength="4"/>
+			<field type="text" name="previewSizeMax" label="Максимальный размер большей стороны превью" size="4" maxlength="4"/>
+			<field type="text" name="imgSizeMax" label="Максимальный размер большей стороны изображения" size="4" maxlength="4"/>
+		</fieldset>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+</data>

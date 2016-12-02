@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<!-- Форма редактирования -->
+	<form id="form_edit" title="Изменить тег" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%?id=%ID%">
+		<param name="row" uri="#id"/>
+		<field type="text" name="tag" label="Тег" size="40" uri="#tag" check="empty"/>
+		<field type="text" name="title" label="Заголовок страницы" size="60" uri="#title"/>
+		<field type="textarea" name="announce" label="Анонс" uri="#announce"/>
+		<field type="html" height="300" name="detail" label="Статья" uri="#detail"/>
+		<fieldset title="Метатеги">
+			<field type="text" name="meta_title" label="Заголовок" size="60" uri="#meta_title"/>
+			<field type="text" name="meta_keywords" label="Ключевые слова" size="60" uri="#meta_keywords"/>
+			<field type="text" name="meta_description" label="Описание" size="60" uri="#meta_description"/>
+		</fieldset>
+		<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Форма добавления -->
+	<form id="form_add" title="Добавить тег" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%">
+		<param name="sort" uri="#sort"/>
+		<param name="section" uri="#section"/>
+		<field type="text" name="tag" label="Тег" size="40" uri="#tag" check="empty"/>
+		<field type="text" name="title" label="Заголовок страницы" size="60" uri="#title"/>
+		<field type="textarea" name="announce" label="Анонс" uri="#announce"/>
+		<field type="html" height="300" name="detail" label="Статья" uri="#detail"/>
+		<fieldset title="Метатеги">
+			<field type="text" name="meta_title" label="Заголовок" size="60" uri="#meta_title"/>
+			<field type="text" name="meta_keywords" label="Ключевые слова" size="60" uri="#meta_keywords"/>
+			<field type="text" name="meta_description" label="Описание" size="60" uri="#meta_description"/>
+		</fieldset>
+		<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Список записей -->
+	<rowlist id="row_list" pageSize="40" sort="asc">
+		<actions>
+			<action name="new" title="Добавить" class="add"/>
+			<action name="delete" title="Удалить выбранное"/>
+		</actions>
+		<col name="sort" header="№"/>
+		<col name="tag" header="Тег"/>
+		<col name="title" header="Заголовок"/>
+		<col name="exists" header="Существует"/>
+		<col name="active"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+			<button action="move" title="Переместить"/>
+		</buttons>
+	</rowlist>
+	
+	<!-- Форма настроек -->
+	<form id="form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MODULE%']">
+		<fieldset title="Настройки Клиента" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MODULE%']">
+			<field type="text" name="paramName" label="Имя параметра" size="20" uri="/config/@param"/>
+		</fieldset>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+
+</data>

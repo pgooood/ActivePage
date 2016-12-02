@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<form id="form_add" title="Добавление модуля" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MODULEID%']">
+		<field type="text" name="title" label="Заголовок вкладки" size="40" check="empty" uri="/@title"/>
+		<field type="select" name="name" label="Модуль" uri="/@name" check="empty"/>
+		<field type="checkbox" name="readonly" label="Нередактируемый" uri="/@readonly"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	<rowlist pageSize="99" add="add" delete="delete">
+		<col name="title" header="Заголовок" class="cntr"/>
+		<col name="name" header="Модуль" class="cntr"/>
+		<col name="version" header="Версия"/>
+		<col name="description" header="Описание"/>
+		<col name="data" header="Дата"/>
+		<col name="active" header="Редактируемый"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+			<button action="move" title="Переместить"/>
+		</buttons>
+	</rowlist>
+</data>

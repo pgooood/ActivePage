@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form id="section_add" title="Свойства раздела - %TITLE%" method="post" autocheck="autocheck" baseURI="file:///xml/structure.xml?/structure%PATH%">
+	<field type="section_test_id" name="id_sec" size="50" label="ID" uri="/@id"/>
+	<field type="select" name="parent" label="Родительский раздел"/>
+	<field type="sectionbyid" name="position" label="Порядок"/>
+	<field type="text" name="title" size="100" label="Заголовок" uri="/@title" check="empty"/>
+	<field type="text" name="class" label="Класс" uri="/@class"/>
+	<buttonset>
+		<button type="submit" value="Сохранить" class="ok" action="save"/>
+		<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		<button type="submit" value="Удалить" class="del" action="remove" onclick="if(window.confirm('Подтвердите удаление')){this.form.action.value='remove';return true;}return false;"/>
+		<button type="submit" value="Новый Шаблон" class="add" action="newtpl" onclick="var v=prompt('Будет создан шаблон на базе настроек раздела.\nВведите имя шаблона:');if(v){this.form.title.value=v;return true;};return false;"/>
+	</buttonset>
+</form>

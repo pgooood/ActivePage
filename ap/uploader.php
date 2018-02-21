@@ -108,11 +108,13 @@ $dir = new userfiles;
 * Обработка действий
 */
 if(isset($_REQUEST['action'])){
+	
+	// list of valid extensions, ex. array("jpeg", "xml", "bmp")
+	$allowedExtensions = array('jpeg','jpg','gif','png','pdf','txt','rtf','odt','doc','docx','ods','xls','xlsx','zip','rar','swf','flv','xml');
+	
 	switch($_REQUEST['action']){
 		case 'upload':
 			if($dir->isValidDir(@$_REQUEST['dir'])){
-				// list of valid extensions, ex. array("jpeg", "xml", "bmp")
-				$allowedExtensions = array('jpeg','jpg','gif','png','pdf','txt','rtf','odt','doc','docx','ods','xls','xlsx','zip','rar','swf','flv','xml');
 				// max file size in bytes
 				$sizeLimit = 8 * 1024 * 1024;
 				
@@ -150,7 +152,10 @@ if(isset($_REQUEST['action'])){
 			break;
 		
 		case 'rename':
-			if(preg_match('/^[a-zA-Z0-9_ \-\!\.\,]+$/',$newName = trim($_REQUEST['new_name']))){
+			if(preg_match('/^[a-zA-Z0-9_ \-\!\.\,]+$/',$newName = trim($_REQUEST['new_name']))
+				&& preg_match('/.+\.([^\.]+)$/',$newName,$m)
+				&& in_array(strtolower($m[1]),$allowedExtensions)
+			){
 				$ar = array();
 				if(isset($_REQUEST['dirs']) && is_array($_REQUEST['dirs'])) $ar = array_merge($ar,$_REQUEST['dirs']);
 				if(isset($_REQUEST['files']) && is_array($_REQUEST['files'])) $ar = array_merge($ar,$_REQUEST['files']);

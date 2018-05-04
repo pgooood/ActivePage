@@ -1,4 +1,4 @@
-<?
+<?php
 class modules extends taglist{
 private $struct;
 function __construct(xml $xml,$tagName = null){

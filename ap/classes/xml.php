@@ -1,4 +1,4 @@
-<?
+<?php
 class xml{
 private $dd;
 private $xpc;
@@ -21,6 +21,8 @@ function __construct($val = null,$name = null,$cache = true){
 					$this->dd = xml::getCache($path);
 				}else{
 					$this->dd = @DOMDocument::load($path);
+					if(!$this->dd)
+						throw new Exception('DOMDocument hasn\'t been loaded: '.$path);
 					if(strstr($this->dd->documentURI,'%'))
 						$this->dd->documentURI = urldecode($this->dd->documentURI);
 				}

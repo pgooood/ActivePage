@@ -5,6 +5,7 @@ protected $mess = array();
 function err($mess){
 	$this->mess[] = $mess;
 }
+
 function hasErrors(){
 	return count($this->mess);
 }
@@ -14,13 +15,7 @@ function hasCaptcha($form){
 }
 function isSent($form){
 	$xml = new xml($form);
-	return param('action')==$xml->evaluate('string(.//param[@name = "action"]/@value)',$form);
-}
-function isAjaxMode($form){
-	if($v = param('ajax')){
-		$xml = new xml($form);
-		return $v == $xml->evaluate('string(.//param[@name = "ajax"]/@value)',$form);
-	}
+	return param('action')==$xml->evaluate('string(//param[@name = "action"]/@value)',$form);
 }
 function validateFieldValue($form,$field,$val){
 	$pswd = null;
@@ -334,7 +329,7 @@ function getNextSortIndex($form){
 	$rs = $mysql->query('select max(`sort`)+1 as `new_sort_index`
 		from `'.$mysql->getTableName($form->getAttribute('dbTable')).'`
 		where `section`="'.$this->getName().'" AND `module`="'.$this->getId().'"');
-	if($rs && ($row = mysql_fetch_assoc($rs)) && $row['new_sort_index']) $index = $row['new_sort_index'];
+	if($rs && ($row = $mysql->fetch($rs)) && $row['new_sort_index']) $index = $row['new_sort_index'];
 	return $index;
 }
 function getXML(){
@@ -342,9 +337,13 @@ function getXML(){
 }
 function run(){
 	global $_out;
+	
 	$ns = $this->query('form');
 	foreach($ns as $form){
+		//if($this->getSection()) vdump($this->hasCaptcha($form));
+		
 		if(!$form->getAttribute('action')) $form->setAttribute('action',$_SERVER['REQUEST_URI']);
+				
 		if($this->isSent($form)){ //форму отправили
 			$xml = new xml($form);
 			if(!$this->check($form) && ($res = $this->getSentData($form))){
@@ -353,30 +352,12 @@ function run(){
 					$resultSQL = $this->insertDB($res['mysql'],$form);
 				if(!empty($res['xml']))
 					$resultMail = $this->sendEmail($res['xml'],$form);
-				
-				$success = $resultSQL && $resultMail;
-				if($eMessage = $this->query($success ? 'form/good' : 'form/fail')->item(0))
-					$message = xml::getElementText($eMessage);
-				else{
-					$success = false;
-					$message = 'No response message found';
-				}
-				if($this->isAjaxMode($form)){
-					$this->jsonResponse(array('message' => $message),!$success);
-				}else{
-					$form->appendChild($xml->createElement('message'
-						,array('type' => $success ? 'success' : 'danger')
-						,$message
-					));
-				}
-			}else{ // Ошибка
-				if($this->isAjaxMode($form)){
-					$this->jsonResponse(array(
-						'message' => 'Поля формы заполнены неверно'
-						,'errors' => $this->mess),true);
-				}else{
-					$this->fillForm($form);
-				}
+				$form->appendChild($xml->createElement('message'
+					,array('type' => $resultSQL && $resultMail ? 'success' : 'danger')
+					,xml::getElementText($this->query($resultSQL && $resultMail ? 'form/good' : 'form/fail')->item(0))
+				));
+			}else{ // Ошибка - заполняем форму
+				$this->fillForm($form);
 			}
 		}
 		if($form->hasAttribute('appendTo'))
@@ -385,6 +366,7 @@ function run(){
 			$_out->elementIncludeTo($form,$_out->de());
 		else
 			$_out->addSectionContent($form);
+		
         if($this->hasCaptcha($form)){
 			$captcha = new captcha();
 			$captcha->setLanguage($_out->getLang());
@@ -396,18 +378,5 @@ function run(){
 function formMessage($str,$form){
 	$xml = new xml($form);
 	return $form->appendChild($xml->createElement('message',null,$str));
-}
-function jsonResponse($v,$error = null){
-	$arResp = array(
-		'success' => !$error
-		,'response' => $v
-	);
-	if($error)
-		$arResp['error'] = $error;
-	header('Content-Type: application/json');
-	header('Access-Control-Allow-Origin: *');
-
-	echo json_encode($arResp);
-	die;
 }
 }

@@ -1,2 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<data><form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']"><field type="html" name="content" label="Содержание" uri="/html" height="350"/><buttonset><button type="submit" value="Сохранить" class="ok" action="save"/></buttonset></form><form id="content_form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MD%']"><param name="row" uri="/@id"/><field type="text" name="tab_title" label="Заголовок закладки" size="40" uri="/@title"/><field type="text" name="form_title" label="Заголовок формы" size="40" uri="/form/@title"/><buttonset><button type="submit" value="Сохранить" class="ok" action="update"/><button type="submit" value="Применить" class="ok" action="apply_update"/><button type="submit" value="Отмена" class="cancel" action="cancel"/></buttonset></form></data>
+<data>
+	<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']">
+		<field type="html" name="content" label="Содержание" uri="/html" height="350"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="save"/>
+		</buttonset>
+	</form>
+	<form id="content_form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MD%']">
+		<param name="row" uri="/@id"/>
+		<field type="text" name="tab_title" label="Заголовок закладки" size="40" uri="/@title"/>
+		<field type="text" name="form_title" label="Заголовок формы" size="40" uri="/form/@title"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+</data>

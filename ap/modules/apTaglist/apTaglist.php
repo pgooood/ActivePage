@@ -55,34 +55,21 @@ function redirect($mess = null){
 }
 function getForm(){
 	$xml = $this->getSection()->getXML();
-	$e = null;
+	$form_element = null;
 	switch($this->getAction()){
 		case 'update':
 		case 'apply_update':
 		case 'edit':
-			$e = $this->query('form[@id="form_edit"]')->item(0);
+			$form_element = $this->query('form[@id="form_edit"]')->item(0);
 			break;
 		case 'new':
 		case 'add':
 		case 'apply_add':
 		default:
-			$e = $this->query('form[@id="form_add"]')->item(0);
+			$form_element = $this->query('form[@id="form_add"]')->item(0);
 			break;
 	}
-	if($e){
-		$form = new form($e);
-		$form->replaceURI(array(
-			'ID' => $this->getSection()->getId()
-			,'MD' => $this->getId()
-			,'PARENT' => $this->getSection()->GetParent()->getId()
-			,'PATH_DATA_FOLDER_CLIENT' => ABS_PATH_DATA_CLIENT
-			,'PATH_DATA_FILE_CLIENT' => ABS_PATH_DATA_CLIENT.ap::id($this->getSection()->getId()).'.xml'
-			,'PATH_DATA_FILE_AP' => ABS_PATH_DATA_AP.ap::id($this->getSection()->getId()).'.xml'
-			,'PATH_SITE' => ABS_PATH_SITE
-			,'PATH_STRUCT' => ABS_PATH_STRUCT_CLIENT
-		));
-		return $form;
-	}
+	return $form_element ? new form($form_element) : null;
 }
 function getListRow($i,DOMElement $e){
 	return array(
@@ -246,3 +233,4 @@ function onDefault(){
 }
 function addTemplates(){}
 }
+?>

@@ -1,4 +1,4 @@
-<?
+<?php
 class section{
 private $e;
 private $tpl;

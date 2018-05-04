@@ -1,4 +1,4 @@
-<?
+<?php
 require 'formGallery.php';
 class apArticles extends module{
 const tableArticles = 'articles';
@@ -247,7 +247,7 @@ static function getNextSortIndexEx($secionId,$moduleId){
 	if($secionId && $moduleId
 		&& ($rs = $mysql->query('select max(`sort`)+1 as `new_sort_index` from `'
 			.$mysql->getTableName(apArticles::tableArticles).'` where `section`="'.$secionId.'" AND `module`="'.$moduleId.'"'))
-		&& ($row = mysql_fetch_assoc($rs))
+		&& ($row = $mysql->fetch($rs))
 		&& $row['new_sort_index']
 	) $index = $row['new_sort_index'];
 	return $index;

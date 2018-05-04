@@ -45,9 +45,9 @@ var input=todo.get('editimage</xsl:text><xsl:value-of select="$fieldName"/><xsl:
 		};
 		url = '../'+url;
 			banner=banner.appendChild(todo.create('div'));
-			var type=url.replace(/^.+\.(gif|jpg|swf|png)$/i,"$1");
+			var type=url.replace(/^.+\.(gif|jpg|swf)$/i,"$1");
 			switch(type.toLowerCase()){
-				case 'gif':case 'jpg':case 'png':
+				case 'gif':case 'jpg':
 					field.style.display='block';
 					banner.appendChild(todo.create('img',{'width':'</xsl:text><xsl:value-of select="@width"/><xsl:text>px','height':'</xsl:text><xsl:value-of select="@height"/><xsl:text>px','src':url}));
 					break;
@@ -60,6 +60,7 @@ var input=todo.get('editimage</xsl:text><xsl:value-of select="$fieldName"/><xsl:
 					});
 					break;
 			}
+		
 	};
 deleteButton.onclick=function(){
 	if(confirm('Удалить баннер'))initBanner();

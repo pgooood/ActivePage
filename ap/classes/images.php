@@ -109,7 +109,7 @@ class images {
 				case IMG_PNG: $this->imageSource = imagecreatefrompng($filename); break;
 				case IMG_JPG: $this->imageSource = imagecreatefromjpeg($filename); break;
 			}
-			if(false){//preserve alpha
+			if($alpha){//preserve alpha
 				imagecolortransparent($this->image, imagecolorallocate($this->image, 255, 255, 255));
 				imagealphablending($this->image, false);
 				imagesavealpha($this->image, true);
@@ -126,7 +126,6 @@ class images {
 				&& ($green = intval($arRGB[1])) >= 0 && $green <= 255
 				&& ($blue = intval($arRGB[2])) >= 0 && $blue <= 255
 			){
-				//vdump($arRGB);
 				$color = imagecolorallocate($this->image,$red,$green,$blue);
 				imagefill($this->image,0,0,$color);
 			}

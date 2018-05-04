@@ -71,7 +71,7 @@ function save(){
 				if(preg_match('/^([\w\-]+)(?:\[((?:@[\w\-]+|@[\w\-]+=["\'][^"\']+["\']|\s+|and|or|[0-9])+)\]){0,1}$/',$str,$res)){
 					$elem = $elem->appendChild($xml->createElement($res[1]));
 					if(isset($res[2])){
-						$tmp = explode('and',$res[2]);
+						$tmp = explode(' and ',$res[2]);
 						//все атрибуты в условии запроса, у которых заданы значения, будут созданы
 						foreach($tmp as $str) if(preg_match('/^@([\w\-]+)=["\']([^"\']+)["\']$/',trim($str),$res)){
 							$elem->setAttribute($res[1],$res[2]);

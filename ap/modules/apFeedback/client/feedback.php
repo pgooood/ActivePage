@@ -299,7 +299,7 @@ function getNextSortIndex($form){
 	$rs = $mysql->query('select max(`sort`)+1 as `new_sort_index`
 		from `'.$mysql->getTableName($form->getAttribute('dbTable')).'`
 		where `section`="'.$this->getName().'" AND `module`="'.$this->getId().'"');
-	if($rs && ($row = mysql_fetch_assoc($rs)) && $row['new_sort_index']) $index = $row['new_sort_index'];
+	if($rs && ($row = $mysql->fetch($rs)) && $row['new_sort_index']) $index = $row['new_sort_index'];
 	return $index;
 }
 function getXML(){

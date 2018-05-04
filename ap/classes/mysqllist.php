@@ -66,21 +66,23 @@ function importSettings(DOMElement $e){
 	return $res;
 }
 function numRows(){
+	$mysql = new mysql();
 	$params = array_merge($this->params,array(
 		'cols' => 'COUNT(*) AS `num_rows`',
 		'limit' => null,
 		'sort' => null,
 	));
 	if($rs = $this->select($params)){
-		$num_rows = mysql_num_rows($rs);
+		$num_rows = $mysql->numRows($rs);
 		if($num_rows==1){
-			$row = mysql_fetch_assoc($rs);
+			$row = $mysql->fetch($rs);
 			return $row['num_rows'];
 		}
 		return $num_rows;
 	}
 }
 function build(){
+	$mysql = new mysql();
 	$params = $this->getParams($this->params);
 	$params['limit'] = $this->getStartIndex().','.$this->getPageSize();
 	if(!$params['order'] && $params['sortcol']){
@@ -90,7 +92,7 @@ function build(){
 		$headers = $this->getHeaders();
 		$values = array();
 		$counter = $this->getStartIndex();
-		while($row = mysql_fetch_assoc($rs)){
+		while($row = $mysql->fetch($rs)){
 			$counter++;
 			foreach($headers as $h){
 				if(isset($this->fieldDate[$h]))

@@ -1,9 +1,6 @@
-<?
+<?php
 class mysqlTable extends mysql{
-private $customFieldList = '*';
-private $joins;
-private $tableAlias;
-private $groupby;
+protected $customFieldList = '*',$joins,$tableAlias,$groupby;
 function __construct($table){
 	parent::__construct();
 	$this->setTable($table);
@@ -39,8 +36,8 @@ function getNumRows($condition=null){
 		.($condition ? ' where '.$condition : null)
 		.($this->groupby ? ' GROUP BY '.$this->groupby : null);
 	if($rs=$this->query($query)){
-		if($this->joins) $num = mysql_num_rows($rs);
-		elseif($row = mysql_fetch_assoc($rs)) $num = $row['num_rows'];
+		if($this->joins) $num = $this->numRows($rs);
+		elseif($row = $this->fetch($rs)) $num = $row['num_rows'];
 	}
 	return $num;
 }	

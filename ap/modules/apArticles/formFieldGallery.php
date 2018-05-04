@@ -36,7 +36,7 @@ function deleteImages($id_article){
 	$mysql = new mysql();
 	if(
 		($rs = $mysql->query('select `id` from `'.$mysql->getTableName($this->getTable()).'` where `id_article`='.$id_article.' and `field_name`="'.addslashes($this->ff->getName()).'"'))
-	)while($r = mysql_fetch_assoc($rs)){
+	)while($r = $mysql->fetch($rs)){
 		foreach($this->formats as $param){
 			$e = $this->ff->getRootElement()->appendChild($param->cloneNode(true));
 			$e->setAttribute('name',$fieldName);
@@ -105,10 +105,10 @@ private function load($id_article){
 	if(($rs = $mysql->query('select `id`,`title` from `'.$mysql->getTableName($this->getTable()).'` where `id_article`='.$id_article.' and `field_name`="'.addslashes($this->ff->getName()).'"'
 			.(count($arId) ? ' and `id` not in('.implode(',',$arId).')' : null).' order by `sort`')
 		)
-		&& mysql_num_rows($rs)
+		&& $mysql->numRows($rs)
 	){
 		$rowsToDelete = array();
-		while($r = mysql_fetch_assoc($rs)){
+		while($r = $mysql->fetch($rs)){
 			$fieldName = $this->fieldName($r['id']);
 			if($isUpdate){
 				$this->values[$fieldName] = jpgScheme::VALUE_DELETE;

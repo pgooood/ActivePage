@@ -111,7 +111,7 @@ function getRow($con,$table,$cond){
 		$mysql = new mysql($con);
 		$query = 'SELECT * FROM `'.$mysql->getTableName($table).'` WHERE '.$cond;
 		if($rs = $mysql->query($query)){
-			return $cache[$con][$table][$cond] = mysql_fetch_assoc($rs);
+			return $cache[$con][$table][$cond] = $mysql->fetch($rs);
 		}
 	}
 }

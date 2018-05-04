@@ -1,4 +1,4 @@
-<?
+<?php
 class announce extends articles{
 function run(){
 	global $_struct;
@@ -11,10 +11,18 @@ function run(){
 			&& ($modules = $sec->getModules())
 			&& (($m = $modules->getById($idMod)) || ($m = $modules->getByName($idMod)))
 		){
+			$arParams = array();
+			if($n->attributes){
+				$arSkip = array('section','module','name','sort','size','parent');
+				foreach($n->attributes as $attr)
+					if(!in_array($attr->name,$arSkip))
+						$arParams[$attr->name] = $attr->value;
+			}
 			call_user_func(array(&$m,'announce'),$tagname
 				,$n->getAttribute('sort')
 				,$n->getAttribute('size')
-				,$n->getAttribute('parent'));
+				,$n->getAttribute('parent')
+				,$arParams);
 		}
 	}
 }

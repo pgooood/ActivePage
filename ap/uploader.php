@@ -108,10 +108,10 @@ $dir = new userfiles;
 * Обработка действий
 */
 if(isset($_REQUEST['action'])){
-	
+
 	// list of valid extensions, ex. array("jpeg", "xml", "bmp")
 	$allowedExtensions = array('jpeg','jpg','gif','png','pdf','txt','rtf','odt','doc','docx','ods','xls','xlsx','zip','rar','swf','flv','xml');
-	
+
 	switch($_REQUEST['action']){
 		case 'upload':
 			if($dir->isValidDir(@$_REQUEST['dir'])){

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
 	<name>Контент</name>
-	<version>1.2.2</version>
+	<version>1.2.3</version>
 	<description>Управление содержанием раздела</description>
-	<data>27.04.2012</data>
+	<data>15.02.2016</data>
 </module>
 <!--
 История версий:
+
+1.2.3
+Функции по сохранению картинок вынесены в класс xmlGallery
 
 1.2.2
 Пофиксин баг с реплейсом данных в соседних модулях

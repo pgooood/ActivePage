@@ -138,7 +138,7 @@ function fixedFields($form){
 		$mysql = new mysql($dbConnect);
 		$q = 'SHOW COLUMNS FROM '.$mysql->getTableName($dbTable);
 		$rs = $mysql->query($q);
-		while($res = mysql_fetch_assoc($rs)) {
+		while($res = $mysql->fetch($rs)) {
 			if(!$res['Extra']) $ff->addOption($res['Field'],$res['Field']);
 		}
 
@@ -362,7 +362,7 @@ function settings($action){
 		$mysql = new mysql(($con? $con : null));
 		$rs = $mysql->query('SHOW TABLES');
 		$select_tb = $form->getField('form_db_name_table');
-		while($res = mysql_fetch_array($rs))
+		while($res = $mysql->fetchArray($rs))
 			$select_tb->addOption($res[0], $res[0]);
 		
 		$form->load();

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data> 
 <!-- Форма редактирования -->
-<form id="form_edit" title="Изменить баннер" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']/banners/item[%POSITION%]">
+<form id="form_edit" title="Изменить баннер" method="post" autocheck="autocheck" baseURI="file:///xml/site.xml?/site/banners/banner[%POSITION%]">
 	<param name="width" uri="/@width"/>
 	<param name="height" uri="/@height"/>
 	<param name="mime" uri="/@mime"/>
 	<field type="text" name="title" label="Заголовок" size="60" uri="/@title"/>
 	<field type="text" name="url" label="Ссылка" size="60" uri="/@url"/>
-	<field type="banner" name="file" label="Баннер (swf,jpg,gif,png)" uri="/@file"/>
+	<field type="banner" name="file" label="Баннер (swf,jpg,gif)" uri="/@file"/>
 	<buttonset>
 		<button type="submit" value="Сохранить" class="ok" action="update"/>
 		<button type="submit" value="Применить" class="ok" action="apply_update"/>
@@ -16,13 +16,13 @@
 </form>
 
 <!-- Форма добавления -->
-<form id="form_add" title="Изменить баннер" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']/banners">
-	<param name="item[width]" uri="#item"/>
-	<param name="item[height]" uri="#item"/>
-	<param name="item[mime]" uri="#item"/>
-	<field type="text" name="item[title]" label="Заголовок" size="60" uri="#item"/>
-	<field type="text" name="item[url]" label="Ссылка" size="60" uri="#item"/>
-	<field type="banner" name="item[file]" label="Баннер (swf,jpg,gif,png)" uri="#item"/>
+<form id="form_add" title="Изменить баннер" method="post" autocheck="autocheck" baseURI="file:///xml/site.xml?/site/banners">
+	<param name="banner[width]" uri="#banner"/>
+	<param name="banner[height]" uri="#banner"/>
+	<param name="banner[mime]" uri="#banner"/>
+	<field type="text" name="banner[title]" label="Заголовок" size="60" uri="#banner"/>
+	<field type="text" name="banner[url]" label="Ссылка" size="60" uri="#banner"/>
+	<field type="banner" name="banner[file]" label="Баннер (swf,jpg,gif)" uri="#banner"/>
 	<buttonset>
 		<button type="submit" value="Сохранить" class="ok" action="add"/>
 		<button type="submit" value="Применить" class="ok" action="apply_add"/>
@@ -31,7 +31,7 @@
 </form>
 
 <!-- Список записей -->
-<rowlist id="banner_list" pageSize="20" listName="banners" itemName="item" parentUri="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']">
+<rowlist id="banner_list" pageSize="12">
 	<col name="sort" header="№"/>
 	<col name="title" header="Заголовок"/>
 	<col name="url" header="Ссылка"/>

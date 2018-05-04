@@ -1,13 +1,14 @@
-<?
+<?php
 class mysqlToXml extends mysqlTable{
-	var $pageParamName;
-	var $skipEmptyFields;
-	var $pagingUrl;
-	var $images = array();
-	var $fieldFloat = array();
-	var $fieldCond = array();
-	var $fieldDate = array();
-	var $currentSection;
+protected $pageParamName
+	,$skipEmptyFields
+	,$pagingUrl
+	,$images = array()
+	,$fieldFloat = array()
+	,$fieldCond = array()
+	,$fieldDate = array()
+	,$currentSection
+	,$sort_control = false;
 function __construct($table){
 	parent::__construct($table);
 	$this->image = null;
@@ -84,7 +85,7 @@ function listToXML($outTagname,$condition = null,$sort = null){
 	$this->getRow($row_set,$condition,$limit['limit_string'],$sort);
 	$root = $outTag;
 	$counter = 0;
-	while($row = mysql_fetch_assoc($row_set)){
+	while($row = $this->fetch($row_set)){
 		//группируем записи, если надо
 		if(isset($this->groupingField)){
 			if(!(isset($row[$this->groupingField]))) $root = $outTag;
@@ -101,7 +102,7 @@ function listToXML($outTagname,$condition = null,$sort = null){
 }
 function rowToXML($outTagname,$condition,&$row){
 	$this->getRow($row_set,$condition);
-	if($row = mysql_fetch_assoc($row_set)){
+	if($row = $this->fetch($row_set)){
 		$page = 1;
 		if($this->sort_control){
 			$query = 'active=1 and `sort`<='.$row['sort'];

@@ -176,19 +176,19 @@ function getList($param = false){
 	if($e = $xml->query('/data/rowlist')->item(0)){
 		
 		$modules = $this->getModuleList();
-		$modules_this_section = $this->getModules();
-
-		$rl = new rowlist($e,$modules_this_section->getNum(),param('page'));
-
+		$modules_by_this_section = $this->getModules();
+		
+		$rl = new rowlist($list_element,$modules_by_this_section->getNum(),param('page'));
+		$headers = $rl->getHeaders();
+		
 		if(!$param){
 			$modules_sec = array();
-
-			foreach($modules_this_section as $m){
+			
+			foreach($modules_by_this_section as $key => $m){
 				$modules_sec[$m->getId()] = array(
-					'idmodule'	=>	$m->getId()
-					,'title'	=>	$m->getTitle()
-					,'name'		=>	$m->getName()
-					,'active'	=>	$m->getRootElement()->hasAttribute('readonly')
+					'idmodule'	=>	$m->getId(),
+					'title'		=>	$m->getTitle(),
+					'name'		=>	$m->getName(),
 				);
 			};
 			

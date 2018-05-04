@@ -1,4 +1,4 @@
-﻿<?
+﻿<?php
 class xmlform{
 private $e;
 function __construct(DOMElement $e){
@@ -42,48 +42,81 @@ function message($v){
 }
 function check(){
 	$message = array();
+	$arrEmptyOrFlags = array();
 	$res = $this->query('.//field[@check or @type="email"]');
 	foreach($res as $field){
 		$name = $field->getAttribute('name');
 		$val = $this->response($name);
-		$isEmptyCheck = strstr($field->getAttribute('check'),'empty') && !$val;
-		switch($field->getAttribute('type')){
-			case 'password_confirm':
-				if($isEmptyCheck)
-					$message[$name] = 'Поле "'.$field->getAttribute('label').'" не заполнено.';
-				if(strlen($val)<6)
-					$message[$name] = 'Минимальная длина пароля <strong>6</strong> символов.';
-				if($val != $this->response($name.'_confirm'))
-					$message[$name] = 'Введенные пароли не совпадают';
-				break;
-			case 'checkbox':
-			case 'radio':
-				if($isEmptyCheck)
-					$message[$name] = 'Поле "'.$field->getAttribute('label').'" не отмечено';
-				break;
-			case 'email':
-				if($val && !mymail::isEmail($val))
-					$message[$name] = 'Адрес электронной почты в поле "'.$field->getAttribute('label').'" введен неверно';
-				break;
-			case 'delivery':
-				if($isEmptyCheck)
-					$message[$name] = 'Поле "'.$field->getAttribute('label').'" не отмечено';
-				if(mb_stristr($val,'Транспортная компания')!==false){
-					$val2 = $this->response($name.'_company');
-					if(!$val2) $message[$name] = 'Транспортная компания не выбрана';
-				}
-				if(mb_stristr($val,'Самовывоз')===false && !$this->response('delivery_address')){
-					$message[$name] = 'Не указан адрес доставки';
-				}
-				break;
-			default:
-				if(strstr($field->getAttribute('check'),'empty') && !$val)
-					$message[$name] = 'Поле "'.$field->getAttribute('label').'" не заполнено';
+		if(preg_match('/empty-or-([^\s"]+)/',$field->getAttribute('check'),$m)
+			&& ($field2 = $this->getField($m[1]))
+		){
+			if(!in_array($m[1],$arrEmptyOrFlags)){
+				$arrEmptyOrFlags[] = $field->getAttribute('name');
+				if($this->validateFieldValue($field) && $this->validateFieldValue($field2))
+					$message[$name] = 'Поле "'.$field->getAttribute('label').'" или "'.$field2->getAttribute('label').'" должно быть заполнено';
+			}
+			continue;
 		}
+		if($err = $this->validateFieldValue($field))
+			$message[$name] = $err;
 	}
 	if(($captcha = $this->getCaptcha()) && !$captcha->check())
 		$message[$captcha->getParamName()] = 'Результат выражения с картинки введен неверно';
 	return $message;
+}
+
+function validateFieldValue($field){
+	$name = $field->getAttribute('name');
+	$val = $this->response($name);
+	$isEmptyCheck = strstr($field->getAttribute('check'),'empty') && !$val;
+	$error = null;
+	switch($field->getAttribute('type')){
+		case 'password_confirm':
+			if($isEmptyCheck)
+				$error = 'Поле "'.$field->getAttribute('label').'" не заполнено.';
+			if(strlen($val)<6)
+				$error = 'Минимальная длина пароля <strong>6</strong> символов.';
+			if($val != $this->response($name.'_confirm'))
+				$error = 'Введенные пароли не совпадают';
+			break;
+		case 'checkbox':
+		case 'radio':
+			if($isEmptyCheck)
+				$error = 'Поле "'.$field->getAttribute('label').'" не отмечено';
+			break;
+		case 'email':
+			if($val && !mymail::isEmail($val))
+				$error = 'Адрес электронной почты в поле "'.$field->getAttribute('label').'" введен неверно';
+			break;
+		case 'recaptcha':
+			if($val){
+				$json = file_get_contents(
+					'https://www.google.com/recaptcha/api/siteverify'
+					,false
+					,stream_context_create(array(
+						'http' => array(
+							'method'  => 'POST',
+							'header'  => 'Content-type: application/x-www-form-urlencoded',
+							'content' => http_build_query(array(
+								'secret' => $field->getAttribute('secret')
+								,'response' => $val
+							))
+						)
+					))
+				);
+				if($json && ($resp = json_decode($json))){
+					if(empty($resp->success))
+						$this->err('Капча введена неверно');
+				}else
+					$this->err('Ошибка, связь с сервисом не удалась');
+			}else
+				$this->err('Капча введена неверно');
+			break;
+		default:
+			if(strstr($field->getAttribute('check'),'empty') && !$val)
+				$error = 'Поле "'.$field->getAttribute('label').'" не заполнено';
+	}
+	return $error;
 }
 function fill(){
 	$xml = new xml($this->getElement());

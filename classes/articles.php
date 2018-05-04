@@ -1,4 +1,4 @@
-<?
+<?php
 class articles extends module{
 function run(){
 	global $_out;
@@ -52,6 +52,7 @@ function getListProp($name){
 		case 'tagNameText': if(!$v) $v = 'articlesRow'; break;
 		case 'tagNameList': if(!$v) $v = 'articles'; break;
 		case 'imageLimit': if(!$v)  $v = 1; break;
+		case 'imageExt': if(!$v)  $v = 'jpg'; break;
 	}
 	return $v;
 }
@@ -72,6 +73,8 @@ function getListTable(){
 	$tb->setAttrFields(array('id','section'));
 	$tb->setQueryFields(array('date','title','article'));
 	
+	if($v = $this->getListProp('nl2br'))
+		$tb->addNl2Br('announce');
 	if($v = $this->getListProp('coll'))
 		$tb->setRowSize($v);
 	if($v = $this->getListProp('pageParam'))
@@ -136,17 +139,21 @@ function getDetailXML($tagName,$row,&$val){
 /**
 * Анонсы
 */
-function getAnnounceTable(){
+function getAnnounceTable($arParams){
 	$tb = $this->getTable();
 	$tb->setPageParamName('xxx');
 	$tb->setPageSize(3);
-	$tb->setAttrFields(array('id','date'));
-	$tb->setQueryFields(array('date','title','announce'));
+	$tb->setAttrFields(array('id','section','date'));
+	$listQueryFields = array('date','title','announce');
+	if(!empty($arParams['includeContent']))
+		$listQueryFields[] = 'article';
+	$tb->setQueryFields($listQueryFields);
 	return $tb;
 }
-function announce($tagname,$sort = null,$size = null,$parent = null){
+function announce($tagname,$sort = null,$size = null,$parent = null,$arParams = null){
 	global $_out;
-	$tb = $this->getAnnounceTable();
+	
+	$tb = $this->getAnnounceTable($arParams);
 	if($size) $tb->setPageSize($size);
 	if(($xml = $tb->listToXML($tagname
 				,$this->getListCondition()
@@ -155,10 +162,11 @@ function announce($tagname,$sort = null,$size = null,$parent = null){
 		&& (($parent && ($e = $_out->xmlIncludeTo($xml,$parent))) || ($e = $_out->xmlInclude($xml)))
 	){
 		$id = array();
+		$imageLimit = isset($arParams['imageLimit']) ? intval($arParams['imageLimit']) : null;
 		$res = $_out->query('.//row[@id]',$e);
 		foreach($res as $row) $id[] = $row->getAttribute('id');
-		$img = $this->getImages($id,true);
-		foreach($res as $row) $this->setImages($row,$img,true);
+		$img = $this->getImages($id,true,$imageLimit);
+		foreach($res as $row) $this->setImages($row,$img,!$imageLimit);
 	}
 }
 function onPageReady($params = null){
@@ -176,19 +184,20 @@ function getImages($id,$preview = false,$limit = null){
 	$res = array();
 	$mysql = new mysql();
 	$counter = array();
+	$ext = $this->getListProp('imageExt');
 	if($rs = $mysql->query('SELECT img.*,art.section,art.module
 FROM `'.$mysql->getTableName('articles_images').'` AS img
 LEFT JOIN `'.$mysql->getTableName('articles').'` AS art ON art.id=img.id_article
 WHERE `id_article` IN ('.implode(',',$id).') AND img.`active`=1
 ORDER BY `id_article`,`sort`')){
-		while($r = mysql_fetch_assoc($rs)){
+		while($r = $mysql->fetch($rs)){
 			if($limit > 0){
 				if(!isset($counter[$r['id_article']])) $counter[$r['id_article']] = 0;
 				if($counter[$r['id_article']] >= $limit) continue;
 				$counter[$r['id_article']]++;
 			}
 			$v = array();
-			if(is_file($path = 'userfiles/articles/'.$r['section'].'/'.$r['id'].'.jpg')){
+			if(is_file($path = 'userfiles/articles/'.$r['section'].'/'.$r['id'].'.'.$ext)){
 				list($width, $height) = getimagesize($path);
 				$v['img'] = $_out->createElement('img',array(
 					'id' => $r['id'],
@@ -199,7 +208,7 @@ ORDER BY `id_article`,`sort`')){
 				if($r['title']) $v['img']->setAttribute('alt',$r['title']);
 			}
 
-			if($preview && is_file($path = 'userfiles/articles/'.$r['section'].'/'.$r['id'].($preview ? '_preview' : null).'.jpg')){
+			if($preview && is_file($path = 'userfiles/articles/'.$r['section'].'/'.$r['id'].($preview ? '_preview' : null).'.'.$ext)){
 				list($width, $height) = getimagesize($path);
 				$v['prv'] = $_out->createElement('preview',array(
 					'src' => $path,

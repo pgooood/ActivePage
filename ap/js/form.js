@@ -105,15 +105,14 @@ fs.setSortValue=function(field){
 		ns=this.getElementsByTagName('input'),
 		m,
 		p1=new RegExp('^'+this._fieldName+'___new\\[\\]$'),
-		p2=new RegExp('^'+this._fieldName+'\\['+this._fieldName+'_IMAGE_ID_([a-z]*[0-9]+)');
+		p2=new RegExp('^'+this._fieldName+'\\['+this._fieldName+'_IMAGE_ID_([a-z_]*[0-9]+)');
 	if(inp){
 		for(var i=0;i<ns.length;i++){
 			if(ns[i].name.match(p1)){
 				newCounter++;
 				queue.push('new'+newCounter);
-			}else{
-				m=ns[i].name.match(p2);
-				if(m)queue.push('id'+m[1]);
+			}else if(m=ns[i].name.match(p2)){
+				queue.push('id'+m[1]);
 			}
 		};
 		inp.value=queue.join(',');

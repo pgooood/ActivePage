@@ -148,7 +148,7 @@ class xmlGallery {
 					//пересортировываем
 					$sortOrder = isset($_REQUEST[$ff->getName().'_sort_order']) ? explode(',',$_REQUEST[$ff->getName().'_sort_order']) : array();
 					foreach($sortOrder as $i => $str){
-						if(preg_match('/id(i[0-9]+)/',$str,$m)
+						if(preg_match('/id(.+[0-9]+)$/',$str,$m)
 							&& ($e = $tl->getById($m[1]))
 						) $tl->move($e,$i+1);
 						elseif(preg_match('/new[0-9]+/',$str)

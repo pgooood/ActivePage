@@ -1,47 +1,65 @@
 <?php
 class mysql{
-private $mysql;
+protected static $cache;
+protected $mysql,$id,$e;
+
 function __construct($id = null){
-	global $_site,$_mysql_connection_cache;
+	global $_site;
 	
+	$this->id = $id;
 	$cacheIndex = $id ? $id : 'default';
 	
 	//смотрим в кэш соединений
-	if(!is_array($_mysql_connection_cache))
-		$_mysql_connection_cache = array();
-	if(!empty($_mysql_connection_cache[$cacheIndex])){
-		$this->mysql = $_mysql_connection_cache[$cacheIndex]['mysql'];
-		$this->prefix = $_mysql_connection_cache[$cacheIndex]['prefix'];
+	if(!is_array(self::$cache))
+		self::$cache = array();
+	if(!empty(self::$cache[$cacheIndex])){
+		$this->mysql = self::$cache[$cacheIndex]['mysql'];
 		return;
 	}
 	
 	//если в кэше нет, то соединяемся
 	if($e = $_site->query('/site/mysql/con'.($id ? '[@id="'.$id.'"]' : ''))->item(0)){
-		$this->db = $e->getAttribute('db');
-		$this->host = $e->getAttribute('host');
-		$this->user = $e->getAttribute('user');
-		$this->pass = $e->getAttribute('pass');
-		$this->prefix = trim($e->getAttribute('pref'));
-		$this->charset =  $e->hasAttribute('charset') ? $e->getAttribute('charset') : 'utf8';
 		$this->connect();
-		$_mysql_connection_cache[$cacheIndex]['mysql'] = $this->mysql;
-		$_mysql_connection_cache[$cacheIndex]['prefix'] = $this->prefix;
+		self::$cache[$cacheIndex]['mysql'] = $this->mysql;
 	}else throw new Exception('MySQL connection not found',EXCEPTION_MYSQL);
 }
+protected function e(){
+	global $_site;
+	if(!$this->e)
+		$this->e = $_site->query('/site/mysql/con'.($this->id ? '[@id="'.$this->id.'"]' : ''))->item(0);
+	return $this->e;
+}
+function getDb(){
+	return $this->e()->getAttribute('db');
+}
+function getHost(){
+	return $this->e()->getAttribute('host');
+}
+function getUser(){
+	return $this->e()->getAttribute('user');
+}
+function getPass(){
+	return $this->e()->getAttribute('pass');
+}
+function getPrefix(){
+	return $this->e()->getAttribute('pref');
+}
+function getCharset(){
+	return  $this->e()->hasAttribute('charset')
+		? $this->e()->getAttribute('charset')
+		: 'utf8';
+}
 function connect(){
-	$this->mysql = new mysqli($this->host,$this->user,$this->pass,$this->db);
+	$this->mysql = new mysqli($this->getHost(),$this->getUser(),$this->getPass(),$this->getDb());
 	if($this->mysql->connect_errno)
 		throw new Exception('MySQL connection error:<br/><code>'.$this->mysql->connect_error.'</code>',EXCEPTION_MYSQL);
-	if(!$this->mysql->set_charset($this->charset))
+	if(!$this->mysql->set_charset($this->getCharset()))
 		throw new Exception('MySQL charset setting error:<br/><code>'.$this->mysql->error.'</code>',EXCEPTION_MYSQL);
 }
 function query($query,$resultmode = MYSQLI_STORE_RESULT){
 	$res = $this->mysql->query($query,$resultmode);
 	if(!$res) throw new Exception(mysql_error().'<br/><code>'.$query.'</code>',EXCEPTION_MYSQL);
 	return $res;
-}
-function getPrefix(){
-	return $this->prefix;
 }
 function table($name){
 	return $this->getTableName($name);
@@ -62,7 +80,7 @@ function getFieldType($name,$res){
 }
 function getNextId($table){
 	if($table
-		&& ($rs = $this->query("SHOW TABLE STATUS FROM `".$this->db."` LIKE '".$this->getTableName($table)."'"))
+		&& ($rs = $this->query("SHOW TABLE STATUS FROM `".$this->getDb()."` LIKE '".$this->getTableName($table)."'"))
 		&& ($row = $rs->fetch_assoc())
 	){
 		return $row['Auto_increment'];

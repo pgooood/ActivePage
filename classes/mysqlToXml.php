@@ -8,7 +8,9 @@ protected $pageParamName
 	,$fieldCond = array()
 	,$fieldDate = array()
 	,$currentSection
-	,$sort_control = false;
+	,$sort_control = false
+	,$attrFields
+	,$queryFields;
 function __construct($table){
 	parent::__construct($table);
 	$this->image = null;

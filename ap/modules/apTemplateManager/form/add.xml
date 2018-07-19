@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form id="template_add" title="Добавить шаблон" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/template[@id='%TEMLATEID%']">
+<form id="template_add" title="Добавить шаблон" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/template[@id='%TEMLATEID%']">
 	<field type="select" name="tpl[id]" label="Шаблон" uri="#template" check="empty"/>
 	<buttonset>
 		<button type="submit" value="Сохранить" class="ok" action="add"/>

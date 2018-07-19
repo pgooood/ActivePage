@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
-	<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
-		<field type="image" name="gallery" label="Изображения" uri="/photos" baseURI="file:///userfiles/photo" max="50" hasTitle="hasTitle">
+	<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id='%MD%']">
+		<field type="image" name="gallery" label="Изображения" uri="/photos" baseURI="file:///%PATH_IMAGE%" max="50" hasTitle="hasTitle">
 			<param name="label" uri="/%IMG_NAME%.jpg?max=1280"/>
 			<param name="label" uri="/%IMG_NAME%_preview.jpg?h=150" preview="preview"/>
 		</field>
@@ -9,7 +9,7 @@
 			<button type="submit" value="Сохранить" class="ok" action="save"/>
 		</buttonset>
 	</form>
-	<form id="content_form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///ap/xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+	<form id="content_form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MD%']">
 		<param name="row" uri="/@id"/>
 		<field type="text" name="tab_title" label="Заголовок закладки" size="40" uri="/@title"/>
 		<field type="text" name="form_title" label="Заголовок формы" size="40" uri="/form/@title"/>

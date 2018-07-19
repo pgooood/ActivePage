@@ -81,7 +81,10 @@ function run(){
 				if(is_array($sec = param('sec'))
 					&& $sec['id']
 				){
-					$form->replaceURI(array('PATH' => $this->getQueryPath(param('parent'))));
+					$form->replaceURI(array(
+						'PATH' => $this->getQueryPath(param('parent'))
+						,'PATH_STRUCT_CLIENT' => ABS_PATH_STRUCT_CLIENT
+					));
 					$form->save($_REQUEST);
 					$_struct->addSection($sec['id'],$sec['title']);
 					/* позиция */
@@ -102,7 +105,10 @@ function run(){
 				}else $this->redirect('fail');
 				break;
 			default:
-				$form->replaceURI(array('PATH' => ''));
+				$form->replaceURI(array(
+					'PATH' => ''
+					,'PATH_STRUCT_CLIENT' => ABS_PATH_STRUCT_CLIENT
+				));
 				//список разделов
 				if($ff = $form->getField('parent')){
 					$s = ap::getClientStructure()->getSection(ap::id($nowId));
@@ -148,4 +154,3 @@ static function seclist($e,&$ff,&$exclude){ //список разделов дл
 	}
 }
 }
-?>

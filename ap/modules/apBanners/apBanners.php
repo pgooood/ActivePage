@@ -65,6 +65,7 @@ function addTemplates(){
 	$this->getSection()->getTemplate()->addTemplate('../../modules/'.$this->getName().'/banner.xsl');
 }
 }
+
 require_once('classes/form.php');
 class formBanner extends formField{
 function getPath(){
@@ -83,14 +84,11 @@ function setType($v){
 }
 function setValue($value){
 	parent::setValue($value);
-	//$this->getRootElement()->setAttribute('file','../'.$value);
 	if($path = $this->getPath()){
 		list($width,$height,$type,$attr) = getimagesize($path);
 		if($width) $this->setWidth($width);
 		if($height) $this->setHeight($height);
 	}
 	$ar = array();
-	
-	//vdump(is_file($path));
 }
 }

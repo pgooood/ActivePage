@@ -4,8 +4,16 @@ function __construct(DOMElement $e,structure $struct){
 	parent::__construct($e,$struct);
 }
 function getForm(){
-	if($e = $this->getSection()->getXML()->query('form',$this->getRootElement())->item(0))
-		return new form($e);
+	if($e = $this->getSection()->getXML()->query('form',$this->getRootElement())->item(0)){
+		$form = new form($e);
+		$form->replaceURI(array(
+			'ID' => $this->getSection()->getId()
+			,'MD' => $this->getId()
+			,'PATH_DATA_FILE_CLIENT' => ABS_PATH_DATA_CLIENT.ap::id($this->getSection()->getId()).'.xml'
+			,'PATH_SITE' => ABS_PATH_SITE
+		));
+		return $form;
+	}
 }
 function redirect($mess = null){
 	header('Location: '.ap::getUrl($mess ? array('mess' => $mess) : null));

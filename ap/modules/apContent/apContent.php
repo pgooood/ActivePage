@@ -15,7 +15,9 @@ function getGallery(){
 	return $this->gallery;
 }
 function getFormPrepared(){
+	global $_out;
 	if($form = $this->getForm()){
+		$ln = $_out->getLang();
 		$form->replaceURI(array(
 			'ID' => $this->getSection()->getId()
 			,'MD' => $this->getId()
@@ -25,6 +27,7 @@ function getFormPrepared(){
 			,'PATH_DATA_FILE_AP' => ABS_PATH_DATA_AP.ap::id($this->getSection()->getId()).'.xml'
 			,'PATH_SITE' => ABS_PATH_SITE
 			,'PATH_STRUCT' => ABS_PATH_STRUCT_CLIENT
+			,'PATH_IMAGE' => 'userfiles/sections/'.($ln ? $ln.'/' : null)
 		));
 		return $form;
 	}

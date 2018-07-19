@@ -16,4 +16,7 @@
 			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
 		</buttonset>
 	</form>
+	<!--field type="image" name="image" label="Изображение" uri="/gallery" baseURI="file:///%PATH_IMAGE%" max="1">
+		<param name="label" uri="/%IMG_NAME%.jpg?max=1600" preview="preview"/>
+	</field-->
 </data>

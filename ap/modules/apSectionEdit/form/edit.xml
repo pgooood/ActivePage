@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form id="section_add" title="Свойства раздела - %TITLE%" method="post" autocheck="autocheck" baseURI="file:///xml/structure.xml?/structure%PATH%">
+<form id="section_add" title="Свойства раздела - %TITLE%" method="post" autocheck="autocheck" baseURI="file:///%PATH_STRUCT_CLIENT%?/structure%PATH%">
 	<field type="section_test_id" name="id_sec" size="50" label="ID" uri="/@id"/>
 	<field type="select" name="parent" label="Родительский раздел"/>
 	<field type="sectionbyid" name="position" label="Порядок"/>

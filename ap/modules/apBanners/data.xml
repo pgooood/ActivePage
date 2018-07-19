@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data> 
 <!-- Форма редактирования -->
-<form id="form_edit" title="Изменить баннер" method="post" autocheck="autocheck" baseURI="file:///xml/site.xml?/site/banners/banner[%POSITION%]">
+<form id="form_edit" title="Изменить баннер" method="post" autocheck="autocheck" baseURI="file:///%PATH_SITE%?/site/banners/banner[%POSITION%]">
 	<param name="width" uri="/@width"/>
 	<param name="height" uri="/@height"/>
 	<param name="mime" uri="/@mime"/>
@@ -16,7 +16,7 @@
 </form>
 
 <!-- Форма добавления -->
-<form id="form_add" title="Изменить баннер" method="post" autocheck="autocheck" baseURI="file:///xml/site.xml?/site/banners">
+<form id="form_add" title="Изменить баннер" method="post" autocheck="autocheck" baseURI="file:///%PATH_SITE%?/site/banners">
 	<param name="banner[width]" uri="#banner"/>
 	<param name="banner[height]" uri="#banner"/>
 	<param name="banner[mime]" uri="#banner"/>

@@ -21,9 +21,14 @@ function getQueryPath(){
 	}while($sec = $sec->getParent());
 	return $query;
 }
-static function getForm(){
+function getForm(){
 	$xml = new xml(PATH_MODULE.__CLASS__.'/form/edit.xml');
-	return new form($xml->de());
+	$form = new form($xml->de());
+	$form->replaceURI(array(
+		'PATH' => $this->getQueryPath()
+		,'PATH_STRUCT_CLIENT' => ABS_PATH_STRUCT_CLIENT
+	));
+	return $form;
 }
 function redirect($action,$id = null){
 	$param = array();
@@ -72,7 +77,6 @@ function run(){
 				$this->redirect($action,$id);
 				break;
 			case 'save':
-				$form->replaceURI(array('PATH' => $this->getQueryPath()));
 				// сохранение атрибутов
 				$form->save($_REQUEST);
 				
@@ -102,7 +106,6 @@ function run(){
 				else $this->redirect('newtpl_fail');
 				break;
 			default:
-				$form->replaceURI(array('PATH' => $path));
 				$form->getRootElement()->setAttribute('title',str_replace("%TITLE%",$_sec->getTitle(),$form->getRootElement()->getAttribute('title')));
 				
 				//список разделов

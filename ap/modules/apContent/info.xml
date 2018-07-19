@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
 	<name>Контент</name>
-	<version>1.2.3</version>
+	<version>1.2.4</version>
 	<description>Управление содержанием раздела</description>
-	<data>15.02.2016</data>
+	<data>19.07.2018</data>
 </module>
 <!--
 История версий:

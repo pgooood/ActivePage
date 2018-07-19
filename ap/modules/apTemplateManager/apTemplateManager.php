@@ -87,7 +87,12 @@ function run(){
 				break;
 			case 'update':
 			case 'apply_update':
-				$form->replaceURI(array('ID' => $this->getIdSection(),'TEMLATEID' => param('row')));
+				$form->replaceURI(array(
+					'ID' => $this->getIdSection()
+					,'TEMLATEID' => param('row')
+					,'PATH_DATA_FILE_CLIENT' => ABS_PATH_DATA_CLIENT.ap::id($this->getSection()->getId()).'.xml'
+					,'PATH_DATA_FILE_AP' => ABS_PATH_DATA_AP.ap::id($this->getSection()->getId()).'.xml'
+				));
 				$form->save($_REQUEST);
 				$this->setMessage($action);
 				$this->redirect($action,param('row'));
@@ -95,7 +100,12 @@ function run(){
 			case 'add':
 			case 'apply_add':
 				if($id = ap::getClientSection($this->getIdSection())->getTemplate()->getId()){
-					$form->replaceURI(array('ID' => $this->getIdSection(),'TEMLATEID' => $id));
+					$form->replaceURI(array(
+						'ID' => $this->getIdSection()
+						,'TEMLATEID' => $id
+						,'PATH_DATA_FILE_CLIENT' => ABS_PATH_DATA_CLIENT.ap::id($this->getSection()->getId()).'.xml'
+						,'PATH_DATA_FILE_AP' => ABS_PATH_DATA_AP.ap::id($this->getSection()->getId()).'.xml'
+					));
 					$form->save($_REQUEST);
 					$tpl = param('tpl');
 					$this->setMessage($action);
@@ -104,7 +114,12 @@ function run(){
 				break;
 			case 'edit':
 				if($id = ap::getClientSection($this->getIdSection())->getTemplate()->getId()){
-					$form->replaceURI(array('ID' => $this->getIdSection(),'TEMLATEID' => param('row')));
+					$form->replaceURI(array(
+						'ID' => $this->getIdSection()
+						,'TEMLATEID' => param('row')
+						,'PATH_DATA_FILE_CLIENT' => ABS_PATH_DATA_CLIENT.ap::id($this->getSection()->getId()).'.xml'
+						,'PATH_DATA_FILE_AP' => ABS_PATH_DATA_AP.ap::id($this->getSection()->getId()).'.xml'
+					));
 					$select = $form->getField('id_template');
 					if($template = $templates->getById(param('row'))){
 						$array_diff[] = $template->getAttribute('id');
@@ -241,4 +256,3 @@ function getAllTemplates(){
 }
 
 }
-?>

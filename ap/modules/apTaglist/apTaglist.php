@@ -69,7 +69,17 @@ function getForm(){
 			$form_element = $this->query('form[@id="form_add"]')->item(0);
 			break;
 	}
-	return $form_element ? new form($form_element) : null;
+	if($form = $form_element ? new form($form_element) : null){
+		$form->replaceURI(array(
+			'ID' => $this->getSection()->getId()
+			,'MD' => $this->getId()
+			,'PATH_DATA_FILE_CLIENT' => ABS_PATH_DATA_CLIENT.ap::id($this->getSection()->getId()).'.xml'
+			,'PATH_DATA_FILE_AP' => ABS_PATH_DATA_AP.ap::id($this->getSection()->getId()).'.xml'
+			,'PATH_SITE' => ABS_PATH_SITE
+			,'PATH_STRUCT' => ABS_PATH_STRUCT_CLIENT
+		));
+	}
+	return $form;
 }
 function getListRow($i,DOMElement $e){
 	return array(

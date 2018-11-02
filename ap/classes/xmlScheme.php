@@ -57,7 +57,6 @@ function save(){
 		if(!isset($files[$fpath])) $files[$fpath] = $this->getXML($fpath,null,false);
 		$xml = $files[$fpath];
 		foreach($values as $xpath => $data){
-			
 			//создаем недостающие элементы из xpath запроса
 			$elemToCreate = array();
 			$arQuery = explode('/',$xpath);
@@ -109,7 +108,9 @@ function save(){
 								if(is_array($data['value'])){
 									foreach($data['value'] as $name => $value){
 										if(!is_numeric($name)){
-											if($value)
+											if($name == 'tag_text_content'){
+												xml::setElementText($elem,$value);
+											}elseif($value)
 												$elem->setAttribute($name,$value);
 											elseif($elem->hasAttribute($name))
 												$elem->removeAttribute($name);

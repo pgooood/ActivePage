@@ -159,7 +159,7 @@ protected $e;
 function __construct(DOMElement $e){
 	$this->e = $e;
 }
-protected static function create($tagName,$type,$fieldName,$label = null,$uri = null) { 
+static function create($tagName,$type,$fieldName,$label = null,$uri = null) { 
 	$xml = new xml(null,$tagName);
 	$xml->de()->setAttribute('type',$type);
 	$xml->de()->setAttribute('name',$fieldName);

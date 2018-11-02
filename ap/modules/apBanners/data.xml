@@ -7,7 +7,7 @@
 	<param name="mime" uri="/@mime"/>
 	<field type="text" name="title" label="Заголовок" size="60" uri="/@title"/>
 	<field type="text" name="url" label="Ссылка" size="60" uri="/@url"/>
-	<field type="banner" name="file" label="Баннер (swf,jpg,gif)" uri="/@file"/>
+	<field type="banner" name="file" label="Баннер (swf,jpg,gif,mp4)" uri="/@file"/>
 	<buttonset>
 		<button type="submit" value="Сохранить" class="ok" action="update"/>
 		<button type="submit" value="Применить" class="ok" action="apply_update"/>
@@ -22,7 +22,7 @@
 	<param name="banner[mime]" uri="#banner"/>
 	<field type="text" name="banner[title]" label="Заголовок" size="60" uri="#banner"/>
 	<field type="text" name="banner[url]" label="Ссылка" size="60" uri="#banner"/>
-	<field type="banner" name="banner[file]" label="Баннер (swf,jpg,gif)" uri="#banner"/>
+	<field type="banner" name="banner[file]" label="Баннер (swf,jpg,gif,mp4)" uri="#banner"/>
 	<buttonset>
 		<button type="submit" value="Сохранить" class="ok" action="add"/>
 		<button type="submit" value="Применить" class="ok" action="apply_add"/>
@@ -45,4 +45,27 @@
 		<action name="delete" title="Удалить выбранное"/>
 	</actions>
 </rowlist>
+
+<!-- Настройки -->
+<form id="form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///%PATH_DATA_FILE_AP%?/section/modules/module[@id='%MD%']">
+	<param name="row" uri="/@id"/>
+	<field type="text" name="titleTab" label="Заголовок закладки" size="40" uri="/@title"/>
+	<field type="text" name="titleAdd" label="Заголовок формы добавления" size="30" uri="/form[@id='form_add']/@title"/>
+	<field type="text" name="titleEdit" label="Заголовок формы редактирования" size="30" uri="/form[@id='form_edit']/@title"/>
+	<field type="text" name="titleList" label="Заголовок списка" size="30" uri="/rowlist/@title"/>
+	<field type="select" name="dataLocation" label="Расположение данных" size="30" uri="/@dataLocation">
+		<option value="global">Глобально (файл сайта)</option>
+		<option value="local">Локально (файл раздела)</option>
+	</field>
+	<field type="select" name="contentField" label="Подробное описание" uri="/@contentField">
+		<option value="">Нет</option>
+		<option value="textarea">Textarea</option>
+		<option value="html">TinyMCE</option>
+	</field>
+	<buttonset>
+		<button type="submit" value="Сохранить" class="ok" action="update"/>
+		<button type="submit" value="Применить" class="ok" action="apply_update"/>
+		<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+	</buttonset>
+</form>
 </data>

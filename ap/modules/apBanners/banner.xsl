@@ -44,22 +44,31 @@ var input=todo.get('editimage</xsl:text><xsl:value-of select="$fieldName"/><xsl:
 			return;
 		};
 		url = '../'+url;
-			banner=banner.appendChild(todo.create('div'));
-			var type=url.replace(/^.+\.(gif|jpg|swf)$/i,"$1");
-			switch(type.toLowerCase()){
-				case 'gif':case 'jpg':
+		banner=banner.appendChild(todo.create('div'));
+		var type=url.replace(/^.+\.(gif|jpg|swf|mp4)$/i,"$1");
+		switch(type.toLowerCase()){
+			case 'gif':case 'jpg':
+				field.style.display='block';
+				banner.appendChild(todo.create('img',{'width':'</xsl:text><xsl:value-of select="@width"/><xsl:text>px','height':'</xsl:text><xsl:value-of select="@height"/><xsl:text>px','src':url}));
+				break;
+			case 'swf':
+				todo.ajax(window.location.pathname+window.location.search+'&amp;action=bannersize&amp;path='+encodeURIComponent(url),function(text,xml){
+					if(!xml)return;
+					var size=xml.getElementsByTagName('size')[0];
 					field.style.display='block';
-					banner.appendChild(todo.create('img',{'width':'</xsl:text><xsl:value-of select="@width"/><xsl:text>px','height':'</xsl:text><xsl:value-of select="@height"/><xsl:text>px','src':url}));
-					break;
-				case 'swf':
-					todo.ajax(window.location.pathname+window.location.search+'&amp;action=bannersize&amp;path='+encodeURIComponent(url),function(text,xml){
-						if(!xml)return;
-						var size=xml.getElementsByTagName('size')[0];
-						field.style.display='block';
-						swfobject.embedSWF(url, banner,size.getAttribute('width'),size.getAttribute('height'),10);
-					});
-					break;
-			}
+					swfobject.embedSWF(url, banner,size.getAttribute('width'),size.getAttribute('height'),10);
+				});
+				break;
+			case 'mp4':
+				field.style.display='block';
+				banner
+				.appendChild(todo.create('video',{
+					'width': 400
+					,'controls': 'controls'
+				}))
+				.appendChild(todo.create('source',{'src': url,'type': 'video/mp4'}));
+				break;
+		}
 		
 	};
 deleteButton.onclick=function(){

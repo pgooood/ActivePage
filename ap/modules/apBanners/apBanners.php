@@ -1,6 +1,5 @@
 <?php
 class apBanners extends apTaglist{
-
 	function getTagList(){
 		global $_site;
 		switch($this->getRootElement()->getAttribute('dataLocation')){
@@ -58,20 +57,26 @@ class apBanners extends apTaglist{
 
 	function onUpdate(){
 		if($path = param('file')){
-			$size = getimagesize('../' . $path);
-			param('width', $size[0]);
-			param('height', $size[1]);
-			param('mime', $size['mime']);
+			if($size = getimagesize(PATH_ROOT . $path)){
+				param('width', $size[0]);
+				param('height', $size[1]);
+				param('mime', $size['mime']);
+			}else{
+				param('mime', mime_content_type(PATH_ROOT . $path));
+			}
 		}
 		return parent::onUpdate();
 	}
 
 	function onAdd(){
 		if($path = $_REQUEST['banner']['file']){
-			$size = getimagesize('../' . $path);
-			$_REQUEST['banner']['width'] = $size[0];
-			$_REQUEST['banner']['height'] = $size[1];
-			$_REQUEST['banner']['mime'] = $size['mime'];
+			if($size = getimagesize(PATH_ROOT . $path)){
+				$_REQUEST['banner']['width'] = $size[0];
+				$_REQUEST['banner']['height'] = $size[1];
+				$_REQUEST['banner']['mime'] = $size['mime'];
+			}else{
+				$_REQUEST['banner']['mime'] = mime_content_type(PATH_ROOT . $path);
+			}
 		}
 		return parent::onAdd();
 	}
@@ -177,7 +182,7 @@ require_once('classes/form.php');
 class formBanner extends formField{
 
 	function getPath(){
-		if(($path = $this->getValue()) && is_file($path = '../' . $path)
+		if(($path = $this->getValue()) && is_file($path = PATH_ROOT . $path)
 		)
 			return $path;
 	}

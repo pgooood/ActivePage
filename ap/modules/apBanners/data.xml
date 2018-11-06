@@ -53,6 +53,7 @@
 	<field type="text" name="titleAdd" label="Заголовок формы добавления" size="30" uri="/form[@id='form_add']/@title"/>
 	<field type="text" name="titleEdit" label="Заголовок формы редактирования" size="30" uri="/form[@id='form_edit']/@title"/>
 	<field type="text" name="titleList" label="Заголовок списка" size="30" uri="/rowlist/@title"/>
+	<field type="text" name="listTagName" label="Имя тега" size="20" uri="/@listTagName"/>
 	<field type="select" name="dataLocation" label="Расположение данных" size="30" uri="/@dataLocation">
 		<option value="global">Глобально (файл сайта)</option>
 		<option value="local">Локально (файл раздела)</option>

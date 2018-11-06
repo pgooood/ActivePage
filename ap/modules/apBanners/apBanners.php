@@ -1,5 +1,16 @@
 <?php
 class apBanners extends apTaglist{
+	protected $clientModuleName = 'banners';
+	
+	function getListTagName(){
+		if(!$this->listTagName
+			&& !($this->listTagName = $this->getRootElement()->getAttribute('listTagName'))
+		){
+			$this->listTagName = 'banners';
+		}
+		return $this->listTagName;
+	}
+	
 	function getTagList(){
 		global $_site;
 		switch($this->getRootElement()->getAttribute('dataLocation')){
@@ -11,18 +22,18 @@ class apBanners extends apTaglist{
 					&& (($eModule = $xml->query('module[@id="'.$this->getId().'"]',$eModules)->item(0))
 						|| ($eModule = $eModules->appendChild($xml->createElement('module',array(
 							'id' => $this->getId()
-							,'name' => 'banners')))
+							,'name' => $this->clientModuleName)))
 						))
-					&& !($e = $xml->query('banners',$eModule)->item(0))
+					&& !($e = $xml->query($this->getListTagName(),$eModule)->item(0))
 				){
-					$e = $eModule->appendChild($xml->createElement('banners'));
+					$e = $eModule->appendChild($xml->createElement($this->getListTagName()));
 				}
 				break;
 			//данные в файле сайта
 			case 'global':
 			default:
-				if(!($e = $_site->query('/site/banners')->item(0)))
-					$e = $_site->de()->appendChild($_site->createElement('banners'));
+				if(!($e = $_site->query('/site/'.$this->getListTagName())->item(0)))
+					$e = $_site->de()->appendChild($_site->createElement($this->getListTagName()));
 				break;
 		}
 		return new taglist($e, 'banner');
@@ -123,6 +134,21 @@ class apBanners extends apTaglist{
 			switch($action){
 				case 'update':
 				case 'apply_update':
+					if(($listTagName = param('listTagName'))
+						&& $this->getListTagName() !== $listTagName
+					){
+						if(($sec = ap::getClientSection($this->getSection()->getId()))
+							&& ($xml = $sec->getXml())
+							&& ($eList = $xml->query('/section/modules/module[@id="'.$this->getId().'"]/'.$this->getListTagName())->item(0))
+							&& ($eNewList = $eList->parentNode->appendChild($xml->createElement($listTagName)))
+						){
+							while($eList->firstChild)
+								$eNewList->appendChild($eList->firstChild);
+							$eList->parentNode->removeChild($eList);
+							$xml->save();
+						}
+						$this->listTagName = param('listTagName');
+					}
 					/**
 					 * Перед сохранением добавляем в форму два поля со значением
 					 * базовых урлов для форм в зависимости от значения в поле dataLocation
@@ -134,13 +160,13 @@ class apBanners extends apTaglist{
 					$arValues = $_REQUEST;
 					switch(param('dataLocation')){
 						case 'local':
-							$arValues['form_add_base_uri'] = 'file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id=\'%MD%\' and @name=\'banners\']/banners';
-							$arValues['form_update_base_uri'] = 'file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id=\'%MD%\' and @name=\'banners\']/banners/banner[%POSITION%]';
+							$arValues['form_add_base_uri'] = 'file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id=\'%MD%\' and @name=\''.$this->clientModuleName.'\']/'.$this->getListTagName();
+							$arValues['form_update_base_uri'] = 'file:///%PATH_DATA_FILE_CLIENT%?/section/modules/module[@id=\'%MD%\' and @name=\''.$this->clientModuleName.'\']/'.$this->getListTagName().'/banner[%POSITION%]';
 							break;
 						case 'global':
 						default:
-							$arValues['form_add_base_uri'] = 'file:///%PATH_SITE%?/site/banners';
-							$arValues['form_update_base_uri'] = 'file:///%PATH_SITE%?/site/banners/banner[%POSITION%]';
+							$arValues['form_add_base_uri'] = 'file:///%PATH_SITE%?/site/'.$this->getListTagName();
+							$arValues['form_update_base_uri'] = 'file:///%PATH_SITE%?/site/'.$this->getListTagName().'/banner[%POSITION%]';
 							break;
 					}
 					$form->save($arValues);

@@ -1,4 +1,4 @@
-<?
+<?php
 class taglist implements Iterator{
 private $parent;
 private $keyAttribute;
@@ -99,4 +99,3 @@ function valid(){
 	return (bool) self::current();
 }
 }
-?>

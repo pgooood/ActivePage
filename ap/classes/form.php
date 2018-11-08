@@ -88,7 +88,15 @@ function save($data){
 					$val = md5($val);
 				}
 			}
-			if($f->getAttribute('type')=='checkbox' && !$val) $val = 0;
+			switch($f->getAttribute('type')){
+				case 'checkbox':
+					if(!$val) $val = 0;
+					break;
+				case 'number':
+					if(!strlen($val) || !is_numeric($val))
+						$val = null;
+					break;
+			}
 			if(strstr($f->getAttribute('check'),'num')){
 				$val = str_replace(' ','',str_replace(',','.',$val));
 				if(is_numeric($val))
@@ -232,11 +240,8 @@ function replaceURI($v){
 	$this->getRootElement()->setAttribute('uri',$uri);
 }
 function setValue($value){
-	if($this->hasCheck('num')){
-		if(is_numeric($value))
-			$value = str_replace('.',',',floatval($value));
-		else $value = null;
-	}
+	if($this->hasCheck('num') && $this->getType() != 'number')
+		$value = is_numeric($value) ? str_replace('.',',',floatval($value)) : null;
 	xml::setElementText($this->e,$value);
 }
 function getValue(){

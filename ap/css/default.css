@@ -557,6 +557,7 @@ border-top:1px solid #d2d4d8;
 input[type='text'],
 input[type='password'],
 input[type='email'],
+input[type='number'],
 textarea,
 select{
 border:1px solid #abc0d5;
@@ -570,6 +571,7 @@ input[type='text'],
 input[type='password'],
 input[type='email'],
 input[type='file'],
+input[type='number'],
 select{
 height:20px;
 }

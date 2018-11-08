@@ -1,6 +1,6 @@
 <?php
 class mysqlScheme{
-private $values = array();
+private $values = array(),$cacheTableCols = array();
 function add($uri,$value){
 	if(($url = parse_url($uri))
 		&& isset($url['host'])
@@ -20,22 +20,30 @@ function getFieldType($table,$field,$mysql = null){
 		$mysql = new mysql();
 	if(!isset($this->cacheTableCols))
 		$this->cacheTableCols = array();
-	if(!isset($this->cacheTableCols[$table]))
-		$this->cacheTableCols[$table] = $mysql->query('select * from `'.$mysql->getTableName($table).'` limit 0,1');
-	if($this->cacheTableCols[$table])
-		return $mysql->getFieldType($field,$this->cacheTableCols[$table]);
+	if(!isset($this->cacheTableCols[$table])){
+		$this->cacheTableCols[$table] = array();
+		if($rs = $mysql->query('SELECT COLUMN_NAME,DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_NAME = "'.$mysql->getTableName($table).'"'))
+			while($r = $mysql->fetch($rs))
+				$this->cacheTableCols[$table][$r['COLUMN_NAME']] = $r['DATA_TYPE'];
+	}
+	if(isset($this->cacheTableCols[$table][$field]))
+		return $this->cacheTableCols[$table][$field];
 }
-function prepValue($type,$value){
+function prepValue($type,$value,$mysql){
 	switch($type){
 		case 'int':
 		case 'real':
-			if(!is_numeric($value))
+		case 'float':
+		case 'double':
+			if(!is_numeric($value) || $value === null)
 				$value = 'NULL';
+			else
+				$value = $mysql->num($value);
 			break;
 		case 'string':
 		case 'blob':
 		default:
-			$value = '"'.addslashes($value).'"';
+			$value = $mysql->str($value);
 			break;
 	}
 	return $value;
@@ -50,7 +58,7 @@ function save(){
 					foreach($columns as $cols){
 						$row = array();
 						foreach($cols as $name => $value)
-							$row['`'.$name.'`'] = $this->prepValue($this->getFieldType($table,$name,$mysql),$value);
+							$row['`'.$name.'`'] = $this->prepValue($this->getFieldType($table,$name,$mysql),$value,$mysql);
 						$query = 'INSERT INTO `'.$mysql->getTableName($table).'` ('.implode(',',array_keys($row)).') VALUES ('.implode(',',$row).')';
 						$mysql->query($query);
 					}
@@ -60,11 +68,11 @@ function save(){
 						$row = array();
 						foreach($arCond as $cond){
 							if(preg_match('/^`([^`]+)`="(.*)"$/',$cond,$m)){
-								$row['`'.$m[1].'`'] = $this->prepValue($this->getFieldType($table,$name,$mysql),$m[2]);
+								$row['`'.$m[1].'`'] = $this->prepValue($this->getFieldType($table,$m[1],$mysql),$m[2],$mysql);
 							}
 						}
 						foreach($columns as $name => $value)
-							$row['`'.$name.'`'] = $this->prepValue($this->getFieldType($table,$name,$mysql),$value);
+							$row['`'.$name.'`'] = $this->prepValue($this->getFieldType($table,$name,$mysql),$value,$mysql);
 						$row2 = array();
 						foreach($columns as $name => $value)
 							$row2[] = '`'.$name.'`=VALUES(`'.$name.'`)';
@@ -75,7 +83,7 @@ function save(){
 					}else{
 						$row = array();
 						foreach($columns as $name => $value){
-							$row[] = '`'.$name.'`='.$this->prepValue($this->getFieldType($table,$name,$mysql),$value);
+							$row[] = '`'.$name.'`='.$this->prepValue($this->getFieldType($table,$name,$mysql),$value,$mysql);
 						}
 						$query = 'UPDATE `'.$mysql->getTableName($table).'` SET '.implode(',',$row).' WHERE '.$condition;
 						$mysql->query($query);

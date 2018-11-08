@@ -73,19 +73,17 @@
 </xsl:template>
 <xsl:template match="form//field[@type='image']//param" priority="1"/>
 
-<xsl:template match="/page/section/form//field[@type='text' or @type='email']">
+<xsl:template match="/page/section/form//field[@type]">
 	<div class="field text">
 		<label for="{@name}"><xsl:call-template name="required"/><xsl:value-of select="@label"/></label>
-		<input type="{@type}" name="{@name}" id="{@name}" maxlength="255" value="{text()}">
-			<xsl:if test="@size">
-				<xsl:attribute name="size"><xsl:value-of select="@size"/></xsl:attribute>
-			</xsl:if>
+		<input type="{@type}" name="{@name}" id="{@name}" value="{text()}">
+			<xsl:copy-of select=" @placeholder | @size | @maxlength | @step | @min | @max | @readonly | @required"/>
 		</input>
 		<xsl:apply-templates select="desc"/>
 	</div>
 </xsl:template>
 
-<xsl:template match="/page/section/form//field[@type='password']">
+<xsl:template match="/page/section/form//field[@type='password']" priority="1">
 	<div class="field text">
 		<label for="{@name}"><xsl:call-template name="required"/><xsl:value-of select="@label"/></label>
 		<input type="{@type}" name="{@name}" id="{@name}" maxlength="255">
@@ -96,7 +94,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="/page/section/form//field[@type='date']">
+<xsl:template match="/page/section/form//field[@type='date']" priority="1">
 	<div class="field text">
 		<label for="{@name}"><xsl:call-template name="required"/><xsl:value-of select="@label"/></label>
 		<input type="text" name="{@name}" id="{@name}" size="10" maxlength="10" value="{text()}">
@@ -121,7 +119,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="/page/section/form//field[@type='image']">
+<xsl:template match="/page/section/form//field[@type='image']" priority="1">
 	<xsl:variable name="fieldName" select="@name"/>
 	<div class="field file">
 		<label for="{@name}"><xsl:call-template name="required"/><xsl:value-of select="@label"/></label>
@@ -157,7 +155,7 @@ initImageFieldset(fs,'</xsl:text><xsl:value-of select="$fieldName"/><xsl:text di
 </xsl:template>
 <xsl:template match="/page/section/form//field[@type='image']/param[@value]" mode="js">fs._addImage('<xsl:value-of select="@value"/>','<xsl:value-of select="@name"/>','<xsl:value-of select="@title"/>');</xsl:template>
 
-<xsl:template match="/page/section/form//field[@type='file']">
+<xsl:template match="/page/section/form//field[@type='file']" priority="1">
 	<xsl:variable name="fieldName" select="@name"/>
 	<xsl:variable name="fieldId" select="translate(@name,'[]','__')"/>
 	<div class="field file">
@@ -202,7 +200,7 @@ input.onclick=function(){
 	</script>
 </xsl:template>
 
-<xsl:template match="/page/section/form//field[@type='checkbox']">
+<xsl:template match="/page/section/form//field[@type='checkbox']" priority="1">
 	<div class="field checkbox">
 		<input name="{@name}" id="{@name}" type="checkbox">
 			<xsl:attribute name="value">
@@ -218,7 +216,7 @@ input.onclick=function(){
 	</div>
 </xsl:template>
 
-<xsl:template match="/page/section/form//field[@type='checkboxset' or @type='radio']">
+<xsl:template match="/page/section/form//field[@type='checkboxset' or @type='radio']" priority="1">
 	<div>
 		<xsl:attribute name="class">
 			<xsl:text>field checkbox</xsl:text>
@@ -263,7 +261,7 @@ input.onclick=function(){
 		</input>&#160;<label for="{$fid}"><xsl:value-of select="text()"/></label></li>
 </xsl:template>
 
-<xsl:template match="/page/section/form//field[@type='textarea']">
+<xsl:template match="/page/section/form//field[@type='textarea']" priority="1">
 	<div class="field textarea">
 		<label for="{@name}"><xsl:call-template name="required"/><xsl:value-of select="@label"/></label>
 		<textarea name="{@name}" id="{@name}">
@@ -280,7 +278,7 @@ input.onclick=function(){
 	</div>
 </xsl:template>
 
-<xsl:template match="/page/section/form//field[@type='html']">
+<xsl:template match="/page/section/form//field[@type='html']" priority="1">
 	<div class="field textarea">
 		<label for="{@name}"><xsl:call-template name="required"/><xsl:value-of select="@label"/></label>
 		<textarea name="{@name}" id="{@name}" class="html">
@@ -305,7 +303,7 @@ input.onclick=function(){
 	</div>
 </xsl:template>
 
-<xsl:template match="/page/section/form//field[@type='select']">
+<xsl:template match="/page/section/form//field[@type='select']" priority="1">
 	<div class="field select">
 		<label for="{@name}"><xsl:call-template name="required"/><xsl:value-of select="@label"/>:</label>
 		<select name="{@name}" id="{@name}">
@@ -323,7 +321,7 @@ input.onclick=function(){
 </xsl:template>
 
 <!-- Tags -->
-<xsl:template match="form//field[@type='tags']">
+<xsl:template match="form//field[@type='tags']" priority="1">
 	<div class="darkblock tags">
 		<input type="hidden" name="{@name}" id="{@name}" maxlength="255" size="40" value="{text()}"/>
 		<div class="field">
@@ -443,7 +441,7 @@ todo.onload(function(){
 </xsl:template>
 
 <xsl:template name="required">
-	<xsl:if test="not(contains(@check,'empty-or-')) and contains(@check,'empty')"><span class="red">*</span></xsl:if>
+	<xsl:if test="(not(contains(@check,'empty-or-')) and contains(@check,'empty')) or @required"><span class="red">*</span></xsl:if>
 </xsl:template>
 
 <xsl:template match="/page/section/form/message">

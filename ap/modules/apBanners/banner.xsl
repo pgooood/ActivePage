@@ -49,7 +49,7 @@ var input=todo.get('editimage</xsl:text><xsl:value-of select="$fieldName"/><xsl:
 		switch(type.toLowerCase()){
 			case 'gif':case 'jpg':
 				field.style.display='block';
-				banner.appendChild(todo.create('img',{'width':'</xsl:text><xsl:value-of select="@width"/><xsl:text>px','height':'</xsl:text><xsl:value-of select="@height"/><xsl:text>px','src':url}));
+				banner.appendChild(todo.create('img',{'width':'</xsl:text><xsl:value-of select="@width"/><xsl:text>px','height':'</xsl:text><xsl:value-of select="@height"/><xsl:text>px','src':url},null,{'max-width':'100%','height':'auto'}));
 				break;
 			case 'swf':
 				todo.ajax(window.location.pathname+window.location.search+'&amp;action=bannersize&amp;path='+encodeURIComponent(url),function(text,xml){

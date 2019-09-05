@@ -135,10 +135,12 @@ class xmlGallery {
 					//удаляем
 					foreach($rowsToDelete as $e) $e->parentNode->removeChild($e);
 					//обновляем тайтлы
+					//vdump($_REQUEST);
 					if(isset($_REQUEST[$fieldNameTitle = 'title_'.$ff->getName()])
 						&& is_array($_REQUEST[$fieldNameTitle])
 					) foreach($_REQUEST[$fieldNameTitle] as $str => $title){
-						if(preg_match('/'.$ff->getName().'_IMAGE_ID_(i[0-9]+)/',$str,$m)
+						//vdump(array($str,$exp = '/'.$ff->getName().'_IMAGE_ID_.*(i[0-9]+)/',preg_match($exp,$str,$m),$m),$tl->getById($m[1]));
+						if(preg_match('/'.$ff->getName().'_IMAGE_ID_(.*i[0-9]+)/',$str,$m)
 							&& ($e = $tl->getById($m[1]))
 						){
 							if($title) $e->setAttribute('title',$title);

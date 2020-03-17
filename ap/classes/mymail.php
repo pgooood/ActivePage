@@ -87,16 +87,18 @@ class mymail{
 		return true;
 	}
 	static function isEmail($email){
-		if(eregi("<(.+)>",$email,$match)) $email = $match[1];
-		if(false===eregi("^[_\.0-9a-z\-]+@([_\.0-9a-z\-]+)\.([a-z]{2,4}$)",$email)) return false;
-		return true;
+		$match = null;
+		if(preg_match('/<(.+)>/',$email,$match))
+			$email = $match[1];
+		return filter_var($email,FILTER_VALIDATE_EMAIL);
 	}
 	function emailCheck($emails){
-		if(is_array($emails)){
-			foreach($emails as $email) if(!mymail::isEmail($email)) return false;
-			return true;
-		}
-		return mymail::isEmail($emails);
+		if(!is_array($emails))
+			$emails = array($emails);
+		foreach($emails as $email)
+			if(!self::isEmail($email))
+				return false;
+		return true;
 	}
 	function rigorousEmailCheck($emails){
 		if(!$this->rigorous_email_check) return false;
@@ -172,4 +174,3 @@ class mymail{
 		return '';
 	}
 }
-?>

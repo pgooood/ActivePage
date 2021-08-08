@@ -93,7 +93,7 @@ class form{
 			$uri = form::getURI($f);
 			if($scheme = $this->getSchemeCacheObject($uri)){
 				$fieldName = $f->getAttribute('name');
-				if(preg_match('/^([\w\-]+)\[([\w\-]*)\]$/', $fieldName, $matches))
+				if($isBunchValue = preg_match('/^([\w\-]+)\[([^\]]*)\]$/', $fieldName, $matches))
 					$fieldName = $matches[1];
 				$val = @$data[$fieldName];
 
@@ -108,11 +108,17 @@ class form{
 				}
 				switch($f->getAttribute('type')){
 					case 'checkbox':
-						if(!$val)
+						if($isBunchValue){
+							if(!$val[$fieldName])
+								$val[$fieldName] = 0;
+						}elseif(!$val)
 							$val = 0;
 						break;
 					case 'number':
-						if(!strlen($val) || !is_numeric($val))
+						if($isBunchValue){
+							if(!isset($val[$fieldName]) || !strlen($val[$fieldName]) || !is_numeric($val[$fieldName]))
+								$val[$fieldName] = null;
+						}elseif(!strlen($val) || !is_numeric($val))
 							$val = null;
 						break;
 				}

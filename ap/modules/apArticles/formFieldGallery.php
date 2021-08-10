@@ -1,4 +1,4 @@
-<?
+<?php
 class formFieldGallery{
 private $ff;
 private $formats;
@@ -74,6 +74,7 @@ function getSubmitImages(){
 						,'path' => $path
 						,'title' => $isTitle ? @$arTitles[$name] : null
 						,'sort' => $i);
+						,'ext' => pathinfo($path,PATHINFO_EXTENSION)
 				}
 			}
 		}
@@ -145,6 +146,7 @@ private function addNew($id_article){
 			,'id_article'=>$id_article
 			,'title'=>$img['title'] ? '"'.addslashes($img['title']).'"' : 'null'
 			,'sort'=>$img['sort']
+			,'ext'=>$img['ext'] ? '"'.addslashes($img['ext']).'"' : 'null'
 		))){
 			$img_id = $mysql->getInsertId();
 			$name = $this->fieldName($img_id);

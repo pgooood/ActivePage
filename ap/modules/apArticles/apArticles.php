@@ -282,6 +282,7 @@ KEY `SectionIndex` (`section`)
 `title` varchar(255) DEFAULT NULL,
 `sort` int(10) unsigned DEFAULT NULL,
 `active` tinyint(1) unsigned NOT NULL DEFAULT "1",
+`ext` varchar(20) DEFAULT NULL,
 PRIMARY KEY (`id`),
 KEY `IndexIdArticle` (`id_article`)
 )');

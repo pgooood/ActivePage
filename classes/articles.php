@@ -208,7 +208,7 @@ ORDER BY `id_article`,`sort`')){
 				if($r['title']) $v['img']->setAttribute('alt',$r['title']);
 			}
 
-			if($preview && is_file($path = 'userfiles/articles/'.$r['section'].'/'.$r['id'].($preview ? '_preview' : null).'.'.$ext)){
+			if($preview && is_file($path = 'userfiles/articles/'.$r['section'].'/'.$r['id'].($preview ? '_preview' : null).'.'.(empty($r['ext']) ? $ext : $r['ext']))){
 				list($width, $height) = getimagesize($path);
 				$v['prv'] = $_out->createElement('preview',array(
 					'src' => $path,
